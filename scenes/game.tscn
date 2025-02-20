@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://ked11sr8f1vi"]
+
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_3nhuv"]
+[ext_resource type="PackedScene" uid="uid://clxyr76pfij52" path="res://scenes/player.tscn" id="1_76287"]
+[ext_resource type="PackedScene" uid="uid://2l2itfgqn56e" path="res://scenes/circuit_dock.tscn" id="4_h70ld"]
+[ext_resource type="Script" path="res://scenes/enemy_handler.gd" id="5_bqc86"]
+[ext_resource type="Script" path="res://scenes/area_2d.gd" id="8_ccom2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ef26n"]
+size = Vector2(176, 360)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_3nhuv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(464, 0)
+transform = Transform2D(1, 0, 0, 1, 464, 0)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CircuitDock" parent="." instance=ExtResource("4_h70ld")]
+
+[node name="Control" type="Control" parent="."]
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("5_bqc86")
+
+[node name="Player" parent="." instance=ExtResource("1_76287")]
+position = Vector2(308, 317)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[node name="ScreenMarginLeft" type="StaticBody2D" parent="."]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenMarginLeft"]
+position = Vector2(88, 180)
+shape = SubResource("RectangleShape2D_ef26n")
+
+[node name="ScreenMarginRight" type="StaticBody2D" parent="."]
+position = Vector2(464, 0)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenMarginRight"]
+position = Vector2(88, 180)
+shape = SubResource("RectangleShape2D_ef26n")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("8_ccom2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(150, -100, 150, 400, 480, 400, 480, -100, 530, -100, 530, 450, 100, 450, 100, -100)
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawner_timeout"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

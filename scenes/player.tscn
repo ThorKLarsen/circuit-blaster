@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://clxyr76pfij52"]
+
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="1_28rji"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_arfuo"]
+[ext_resource type="Script" path="res://scenes/shoot_pattern_component.gd" id="3_ue5h4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4px61"]
+atlas = ExtResource("1_28rji")
+region = Rect2(0, 0, 16, 16)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("shoot_pattern_component") groups=["player"]]
+collision_mask = 6
+motion_mode = 1
+script = ExtResource("1_arfuo")
+shoot_pattern_component = NodePath("ShootPatternComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -3)
+texture = SubResource("AtlasTexture_4px61")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -3)
+polygon = PackedVector2Array(3, 3, 3, 4, 1, 6, -1, 6, -3, 4, -3, 3, -1, 1, 1, 1)
+
+[node name="ShootPatternComponent" type="Node2D" parent="."]
+script = ExtResource("3_ue5h4")

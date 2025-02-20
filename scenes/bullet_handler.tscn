@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1burtygl87k6"]
+
+[ext_resource type="Script" path="res://scenes/bullet_handler.gd" id="1_mt4yw"]
+
+[node name="BulletHandler" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_mt4yw")
+player = NodePath("")

@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgvue8ra64xbc"]
+
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_m1krl"]
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="2_c4qlu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xx2en"]
+atlas = ExtResource("2_c4qlu")
+region = Rect2(32, 128, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c74en"]
+size = Vector2(16, 16)
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_timer", "damage_timer", "sprite") groups=["enemy"]]
+collision_mask = 4
+script = ExtResource("1_m1krl")
+attack_timer = NodePath("ShootTimer")
+damage_timer = NodePath("DamageFlash")
+sprite = NodePath("Sprite2D")
+attack_speed_mod = 0.75
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_xx2en")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c74en")
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="DamageFlash" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="DamageFlash" to="." method="_on_damage_flash_timeout"]

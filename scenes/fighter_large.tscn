@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://bw4chsor7b2do"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_ug5ej"]
+[ext_resource type="Script" path="res://scenes/fighter_large.gd" id="2_nkc8d"]
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="3_1ie7o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tv1ly"]
+atlas = ExtResource("3_1ie7o")
+region = Rect2(96, 160, 16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhbsg"]
+size = Vector2(48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8c762"]
+atlas = ExtResource("3_1ie7o")
+region = Rect2(80, 160, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pd0i1"]
+atlas = ExtResource("3_1ie7o")
+region = Rect2(112, 160, 16, 48)
+
+[node name="Enemy" instance=ExtResource("1_ug5ej")]
+script = ExtResource("2_nkc8d")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_tv1ly")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_hhbsg")
+
+[node name="LeftWingSprite" type="Sprite2D" parent="." index="4"]
+texture = SubResource("AtlasTexture_8c762")
+offset = Vector2(-16, 0)
+
+[node name="RightWingSprite" type="Sprite2D" parent="." index="5"]
+texture = SubResource("AtlasTexture_pd0i1")
+offset = Vector2(16, 0)

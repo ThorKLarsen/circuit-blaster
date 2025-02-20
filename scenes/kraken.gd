@@ -1,0 +1,54 @@
+extends Enemy
+
+enum State{
+	MOVING,
+	SHOOTING
+}
+var state: State = State.MOVING
+
+var prefered_x: float
+
+@export var shots_per_round = 10
+@export var time_per_shot = 1.0/10.
+@export var shooting_right: bool = false
+var shots_counter = 0
+var timer = 0.0
+
+func _ready():
+	super._ready()
+	prefered_x = position.x
+
+func move(delta):
+	
+	if state == State.SHOOTING:
+		timer += delta
+		if timer >= time_per_shot:
+			timer -= time_per_shot
+			shots_counter += 1
+			_fire_shot()
+			if shots_counter >= shots_per_round:
+				shots_counter = 0
+				timer = 0
+				state = State.MOVING
+				
+		if shooting_right:
+			velocity = Vector2(8 * speed * delta, 0)
+		else:
+			velocity = Vector2(-8 * speed * delta, 0)
+		
+	elif state == State.MOVING:
+		velocity.y = speed * delta
+		velocity.x = lerp(prefered_x - position.x, 0., delta)
+
+func shoot():
+	state = State.SHOOTING
+
+func _fire_shot():
+	BulletHandler.spawn_bullet(
+		BulletHandler.BulletTypes.ENEMY_BULLET,
+		position,
+		Vector2(0, 40 + velocity.y),
+		10,
+		BulletHandler.bullet_texture,
+		Rect2i(16, 0, 16, 16),
+	)

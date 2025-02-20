@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds481qcub1plw"]
+
+[ext_resource type="Script" path="res://scenes/circuit_grid.gd" id="1_27g3i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nnb8k"]
+
+[node name="CircuitGrid" type="GridContainer" node_paths=PackedStringArray("cell_node")]
+offset_right = 16.0
+offset_bottom = 16.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+script = ExtResource("1_27g3i")
+cell_node = NodePath("Panel")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nnb8k")

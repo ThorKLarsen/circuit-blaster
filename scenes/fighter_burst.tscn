@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dthm7jpobrur5"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_edm4b"]
+[ext_resource type="Script" path="res://scenes/fighter_burst.gd" id="2_v1axc"]
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="3_d7j6b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o24fi"]
+atlas = ExtResource("3_d7j6b")
+region = Rect2(48, 128, 16, 16)
+
+[node name="Enemy" instance=ExtResource("1_edm4b")]
+script = ExtResource("2_v1axc")
+damage_mod = 1.5
+attack_speed_mod = 0.5
+speed_mod = 1.0
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_o24fi")
+
+[node name="ShootTimer" parent="." index="2"]
+wait_time = 2.5

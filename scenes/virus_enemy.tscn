@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://jl1jvcwv64bc"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_dblfk"]
+[ext_resource type="Script" path="res://scenes/virus_enemy.gd" id="2_lv7oh"]
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="3_ifbjb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtqwg"]
+atlas = ExtResource("3_ifbjb")
+region = Rect2(0, 144, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14vsj"]
+size = Vector2(16, 16)
+
+[node name="Enemy" instance=ExtResource("1_dblfk")]
+script = ExtResource("2_lv7oh")
+health_mod = 1.2
+regen_mod = 1.0
+attack_speed_mod = 0.0
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_gtqwg")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_14vsj")
+
+[node name="ShootTimer" parent="." index="2"]
+unique_name_in_owner = true
+wait_time = 1.0

@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy0nbrkfgimno"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_22brf"]
+[ext_resource type="Script" path="res://scenes/snake_head.gd" id="2_5o7cx"]
+[ext_resource type="Texture2D" uid="uid://dcjw2ov6lgtf1" path="res://assets/CB_spritesheet-sheet.png" id="3_50b6i"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b5okp"]
+load_path = "res://.godot/imported/CB_spritesheet.png-2c80ec6b0ca35a9a67a90a2d4a3a58f5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqhme"]
+atlas = SubResource("CompressedTexture2D_b5okp")
+region = Rect2(64, 176, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2a43k"]
+atlas = ExtResource("3_50b6i")
+region = Rect2(64, 160, 16, 16)
+
+[node name="Enemy" instance=ExtResource("1_22brf")]
+script = ExtResource("2_5o7cx")
+number_of_links = 100
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_cqhme")
+
+[node name="Body" type="Sprite2D" parent="." index="1"]
+texture = SubResource("AtlasTexture_2a43k")

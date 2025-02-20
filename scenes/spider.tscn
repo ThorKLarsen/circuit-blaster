@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0e5574h8m8yh"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_8alay"]
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="2_7wagb"]
+[ext_resource type="Script" path="res://scenes/spider.gd" id="2_8s3q2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0yrj"]
+atlas = ExtResource("2_7wagb")
+region = Rect2(32, 144, 16, 16)
+
+[node name="Enemy" instance=ExtResource("1_8alay")]
+script = ExtResource("2_8s3q2")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_j0yrj")
+
+[node name="ShootTimer" parent="." index="2"]
+wait_time = 3.0

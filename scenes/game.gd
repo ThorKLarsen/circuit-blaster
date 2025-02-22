@@ -1,18 +1,37 @@
-extends Node2D
+class_name Game extends Node2D
+
+@export var enemy_spawner: EnemySpawner
+
+var stage_time: float = 60.0
+var _stage_timer = 0
+var waves_per_stage = 4
+
+var waves = []
+var wave_times = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	GameData.game = self
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-
-func _on_enemy_spawner_timeout():
-	var width = get_viewport_rect().size.x
-	var enemy_scene: PackedScene = load("res://scenes/enemy.tscn")
-	var enemy = enemy_scene.instantiate()
-	enemy.position = Vector2(randf()*width/3 + width/3, -16)
-	add_child(enemy)
+	
+	_stage_timer -= delta
+	if _stage_timer <= 0:
+		waves.clear()
+		wave_times.clear()
+		
+		_stage_timer = stage_time
+		GameData.stage += 1
+		for i in range(waves_per_stage):
+			var wave = enemy_spawner.wave_create(GameData.stage)
+			var time = 5 + i * (stage_time*0.9)/waves_per_stage
+			waves.append(wave)
+			wave_times.append(time)
+			print("Wave at: ", time)
+			get_tree().create_timer(time).timeout.connect(
+				enemy_spawner.spawm_wave.bind(wave)
+			)
+		SignalBus.stage_started.emit(waves, wave_times)
+	

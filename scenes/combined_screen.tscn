@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8ayi30nuhfjf"]
+
+[ext_resource type="PackedScene" uid="uid://ked11sr8f1vi" path="res://scenes/game.tscn" id="1_baj5h"]
+[ext_resource type="PackedScene" uid="uid://2l2itfgqn56e" path="res://scenes/circuit_dock.tscn" id="1_srcet"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(352, 720)
+layout_mode = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(176, 360)
+render_target_update_mode = 4
+
+[node name="CircuitDock" parent="HBoxContainer/SubViewportContainer2/SubViewport" instance=ExtResource("1_srcet")]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(576, 720)
+layout_mode = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/SubViewportContainer"]
+disable_3d = true
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(288, 360)
+render_target_update_mode = 4
+
+[node name="Game" parent="HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_baj5h")]
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(176, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2

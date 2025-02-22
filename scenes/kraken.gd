@@ -32,12 +32,12 @@ func move(delta):
 				state = State.MOVING
 				
 		if shooting_right:
-			velocity = Vector2(8 * speed * delta, 0)
+			velocity = Vector2(8 * stat_block.speed * delta, 0)
 		else:
-			velocity = Vector2(-8 * speed * delta, 0)
+			velocity = Vector2(-8 * stat_block.speed * delta, 0)
 		
 	elif state == State.MOVING:
-		velocity.y = speed * delta
+		velocity.y = stat_block.speed * delta
 		velocity.x = lerp(prefered_x - position.x, 0., delta)
 
 func shoot():
@@ -45,6 +45,7 @@ func shoot():
 
 func _fire_shot():
 	BulletHandler.spawn_bullet(
+		get_world_2d(),
 		BulletHandler.BulletTypes.ENEMY_BULLET,
 		position,
 		Vector2(0, 40 + velocity.y),

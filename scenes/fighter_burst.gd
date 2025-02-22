@@ -15,6 +15,7 @@ func shoot():
 	for i in range(3):
 		for j in range(3):
 			BulletHandler.spawn_bullet(
+				get_world_2d(),
 				BulletHandler.BulletTypes.ENEMY_BULLET,
 				position,
 				bullet_velocity.rotated((1 - i)*PI/12) * (1. + j*0.15),

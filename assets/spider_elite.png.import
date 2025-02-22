@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcjw2ov6lgtf1"
-path="res://.godot/imported/CB_spritesheet-sheet.png-0164071cfee2ae61a9b52666ecf0a940.ctex"
+uid="uid://cana5dojyovpe"
+path="res://.godot/imported/spider_elite.png-8dff8d3dacb0c480e76c9a22c1a45294.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/CB_spritesheet-sheet.png"
-dest_files=["res://.godot/imported/CB_spritesheet-sheet.png-0164071cfee2ae61a9b52666ecf0a940.ctex"]
+source_file="res://assets/spider_elite.png"
+dest_files=["res://.godot/imported/spider_elite.png-8dff8d3dacb0c480e76c9a22c1a45294.ctex"]
 
 [params]
 

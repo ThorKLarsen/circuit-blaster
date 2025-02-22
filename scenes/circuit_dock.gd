@@ -30,7 +30,7 @@ func add_circuit(circuit: Circuit):
 
 func place_circuit(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
 	grid.add_circuit(circuit, coords)
-	circuit.position = grid.grid_panels[coords].global_position
+	circuit.position = grid.grid_panels[coords].global_position - global_position
 
 
 func remove_circuit(circuit: Circuit):
@@ -111,7 +111,7 @@ func get_random_ports(shape: Array[Vector2i]):
 func get_random_stats(shape: Array[Vector2i], ports: Array):
 	var n = shape.size()
 	
-	return StatBlock.make_random_circuit_from_level(GameData.level)
+	return StatBlock.make_random_circuit_from_level(GameData.stage)
 
 
 func _on_circuit_dragging_started(circuit: Circuit):
@@ -124,7 +124,7 @@ func _on_circuit_dragging_ended(circuit: Circuit):
 	var circuit_placed = false
 	
 	for grid in grids:
-		if grid.get_rect().has_point(get_global_mouse_position()):
+		if grid.get_rect().has_point(get_global_mouse_position() - global_position):
 			var coords = grid.mouse_cell_coords
 
 			if grid.placable and grid.circuit_can_be_placed_at(circuit, coords):

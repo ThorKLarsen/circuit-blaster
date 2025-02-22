@@ -22,6 +22,7 @@ func shoot():
 	for i in range(n):
 		var dir = Vector2(cos((i/float(n))*PI*2), sin((i/float(n))*PI*2))
 		BulletHandler.spawn_bullet(
+			get_world_2d(),
 			BulletHandler.BulletTypes.ENEMY_BULLET,
 			global_position,
 			dir * 45,

@@ -7,9 +7,8 @@ class_name Enemy extends CharacterBody2D
 var stat_block: StatBlock
 var outer_rect: Rect2
 
-var stall_timer = 4.0
+var stall_timer = 1.5
 var stall_position = 45
-var horizontal = 0
 
 # = Stats =
 @export_category("Stat modifiers")
@@ -19,29 +18,19 @@ var horizontal = 0
 @export var attack_speed_mod: float = 0.7
 @export var speed_mod: float = 0.7
 
-var health:
-	get(): return round(health_mod * stat_block.health)
-	set(value): stat_block.health = value 
-var regen:
-	get(): return regen_mod * stat_block.regen
-	set(value): stat_block.regen = value 
-var damage:
-	get(): return damage_mod * stat_block.damage
-	set(value): stat_block.damage = value 
-var attack_speed:
-	get(): return attack_speed_mod * stat_block.attack_speed 
-	set(value): stat_block.attack_speed = value
-var speed:
-	get(): return speed_mod * stat_block.speed
-	set(value): stat_block.speed = value 
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if stat_block == null:
-		stat_block = StatBlock.make_random_enemy_from_level(GameData.level)
+		stat_block = StatBlock.make_random_enemy_from_level(GameData.stage)
 	
-	attack_timer.wait_time = 1/attack_speed
+	stat_block.health *= health_mod
+	stat_block.regen *= regen_mod
+	stat_block.damage *= damage_mod
+	stat_block.attack_speed *= attack_speed_mod
+	stat_block.speed *= speed_mod
+	
+	attack_timer.wait_time = 1/stat_block.attack_speed
 
 
 func _process(delta):
@@ -62,17 +51,20 @@ func initialize(new_stat_block: StatBlock):
 
 func move(delta):
 	if position.y <= stall_position:
-		velocity = Vector2(0, 2*speed)
+		velocity.y = 2*stat_block.speed
 	elif stall_timer >= 0:
-		velocity = Vector2(0, 0)
+		velocity.y = 0
 		stall_timer -= delta
 	else:
-		horizontal += clamp(5 - randf()*10, -10, 10)
-		velocity = Vector2(horizontal, speed)
-		if (position.x - Constants.left_margin) < 50:
-			horizontal += 5
-		if (Constants.right_margin - position.x) < 50:
-			horizontal -= 5
+		velocity.x += clamp(5 - randf()*10, -15, 15)
+		velocity.y = stat_block.speed
+	
+	if (position.x - Constants.left_margin) < 16:
+		velocity.x += 5
+	elif (Constants.right_margin - position.x) < 16:
+		velocity.x -= 5
+	else:
+		velocity.x -= sign(velocity.x)* 5
 
 func shoot():
 	
@@ -85,6 +77,7 @@ func shoot():
 		return
 	
 	BulletHandler.spawn_bullet(
+		get_world_2d(),
 		BulletHandler.BulletTypes.ENEMY_BULLET,
 		position,
 		bullet_velocity,
@@ -94,16 +87,17 @@ func shoot():
 	)
 
 func hit(value):
-	print(value, ' ', health)
-	health -= value
+	stat_block.health -= value
 	damage_timer.start(min(value, 100)/100.)
 	#modulate = Color.CRIMSON
-	if health <= 0:
+	if stat_block.health <= 0:
 		print('dead')
 		kill()
 
 func kill(player_kill = true):
+	stat_block.free.call_deferred()
 	queue_free()
+	
 
 func _on_shoot_timer_timeout():
 	shoot()

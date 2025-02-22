@@ -24,7 +24,7 @@ var radius = 40
 func _ready():
 	super._ready()
 	if is_head:
-		velocity = Vector2(0, speed/8)
+		velocity = Vector2(0, stat_block.speed/8)
 	set_sprite()
 	angle = -PI
 	

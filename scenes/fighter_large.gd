@@ -8,10 +8,11 @@ func _ready():
 
 
 func move(delta):
-	velocity = Vector2(0, speed)
+	velocity = Vector2(0, stat_block.speed)
 
 func _shoot(velocity: Vector2):
 	BulletHandler.spawn_bullet(
+		get_world_2d(),
 		BulletHandler.BulletTypes.ENEMY_BULLET,
 		global_position,
 		velocity,
@@ -23,7 +24,7 @@ func _shoot(velocity: Vector2):
 	)
 
 func shoot():
-	var n = 24
+	var n = 7 + min(stat_block.attack_level/2, 12)
 	var start_angle = -PI
 	var end_angle =  PI
 	

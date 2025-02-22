@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwm0dldhrcr82"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_pbxij"]
+[ext_resource type="Texture2D" uid="uid://cana5dojyovpe" path="res://assets/spider_elite.png" id="2_exs3x"]
+[ext_resource type="Script" path="res://scenes/spider_elite.gd" id="2_qll24"]
+
+[node name="Enemy" instance=ExtResource("1_pbxij")]
+script = ExtResource("2_qll24")
+health_mod = 35.0
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_exs3x")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 1)
+
+[node name="ShootTimer" parent="." index="2"]
+wait_time = 0.7
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="4"]
+
+[node name="LeftShield" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
+position = Vector2(-36, 1)
+polygon = PackedVector2Array(-9, 34, -28, 15, -28, -17, -9, -36, 18, -36, 2, -17, 2, 15, 2, 34)
+
+[node name="RightShield" type="CollisionPolygon2D" parent="StaticBody2D" index="1"]
+position = Vector2(62, 1)
+polygon = PackedVector2Array(-17, 34, -28, 34, -28, 15, -28, -17, -44, -36, -17, -36, 2, -17, 2, 15)

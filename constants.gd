@@ -21,8 +21,10 @@ const NEIGHBORS = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, 
 ## === Enemies ===
 
 var FIGHTER = load("res://scenes/enemy.tscn")
+var FIGHTER_BURST = load("res://scenes/fighter_burst.tscn")
 var VIRUS = load("res://scenes/virus_enemy.tscn")
 var SNAKE = load("res://scenes/snake_head.tscn")
+var KRAKEN = load("res://scenes/kraken.tscn")
 var FIGHTER_LARGE = load("res://scenes/fighter_large.tscn")
 
 

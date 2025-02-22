@@ -5,6 +5,7 @@ class_name CircuitGrid extends GridContainer
 @export var placable: bool = true
 @export var junk: bool = false
 @export var cell_node: Control
+@export var locked_cells: Array[Vector2i] = []
 
 var grid_panels: Dictionary = {} # Vector2i : Control
 var circuits: Dictionary = {} # Vector2i : Circuit
@@ -17,7 +18,7 @@ func _ready():
 	size = Vector2(grid_size) * Constants.TILE_SIZE
 	columns = grid_size.x
 	
-	# The order of the for statements is important here! Since  GridContainers fill bu column first
+	# The order of the for statements is important here! Since GridContainers fill by column first
 	for j in range(grid_size.y):
 		for i in range(grid_size.x):
 			var cell
@@ -63,6 +64,12 @@ func circuit_can_be_placed_at(circuit: Circuit, coords: Vector2i):
 	or coords.y + circuit.size.y > grid_size.y:
 		return false
 	
+	# Check if overlapping a locked cell
+	for tile in circuit.shape:
+		if tile + coords in locked_cells:
+			return false
+	
+	# Check is circuit overlaps already existing circuits
 	for stored_circuit_coords in circuits.keys():
 		var stored_circuit = circuits[stored_circuit_coords]
 		if stored_circuit == circuit:

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpawnResource" load_steps=2 format=3 uid="uid://f15pb1h1086m"]
+
+[ext_resource type="Script" path="res://classes/spawn_resource.gd" id="1_lg6q0"]
+
+[resource]
+script = ExtResource("1_lg6q0")
+lane = 2
+time_offest = 0.0

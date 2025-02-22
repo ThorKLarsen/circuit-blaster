@@ -17,11 +17,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-BulletHandler="*res://scenes/bullet_handler.gd"
 Constants="*res://constants.gd"
 GameData="*res://game_data.gd"
 TileNames="*res://tile_names.gd"
 Global="*res://global.gd"
+BulletHandler="*res://scenes/bullet_handler.gd"
+SignalBus="*res://signal_bus.gd"
 
 [display]
 
@@ -31,6 +32,8 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+window/snap/snap_2d_transforms_to_pixel=true
+window/snap/snap_2d_vertices_to_pixel=false
 
 [dotnet]
 
@@ -71,6 +74,16 @@ move_down={
 shoot={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
+]
+}
+focus={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+next_attack_mode={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
 ]
 }
 

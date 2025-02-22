@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cd7bmmnagil3v"]
+
+[ext_resource type="FontFile" uid="uid://denx0i8kb4tud" path="res://fonts/TeleSys.ttf" id="1_svdeb"]
+
+[resource]
+font = ExtResource("1_svdeb")
+font_color = Color(1, 0.918555, 0.793502, 1)

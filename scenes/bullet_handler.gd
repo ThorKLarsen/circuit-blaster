@@ -24,11 +24,11 @@ func update_bullets(delta):
 	for b in bullets:
 		b.update(delta)
 		if bullet_is_out_of_bounds(b):
-			#kill_bullet(b)
 			kill_bullet.call_deferred(b)
 			
 
 func spawn_bullet(
+	world_2d: World2D,
 	type: BulletTypes,
 	pos: Vector2,
 	velocity: Vector2,
@@ -46,7 +46,7 @@ func spawn_bullet(
 		1, 
 		texture, 
 		get_canvas_item(), 
-		get_world_2d().space, 
+		world_2d.space, 
 		atlas_region,
 		rotates
 	)

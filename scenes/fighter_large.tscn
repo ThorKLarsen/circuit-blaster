@@ -21,6 +21,9 @@ region = Rect2(112, 160, 16, 48)
 
 [node name="Enemy" instance=ExtResource("1_ug5ej")]
 script = ExtResource("2_nkc8d")
+health_mod = 5.0
+damage_mod = 1.5
+speed_mod = 0.2
 
 [node name="Sprite2D" parent="." index="0"]
 texture = SubResource("AtlasTexture_tv1ly")

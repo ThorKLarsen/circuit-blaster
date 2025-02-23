@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ked11sr8f1vi"]
+[gd_scene load_steps=10 format=3 uid="uid://ked11sr8f1vi"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_3nhuv"]
 [ext_resource type="PackedScene" uid="uid://clxyr76pfij52" path="res://scenes/player.tscn" id="1_76287"]
 [ext_resource type="PackedScene" uid="uid://cgd3cv33mivf6" path="res://scenes/ui_dock.tscn" id="3_sjijk"]
 [ext_resource type="PackedScene" uid="uid://2l2itfgqn56e" path="res://scenes/circuit_dock.tscn" id="4_h70ld"]
 [ext_resource type="Script" path="res://scenes/enemy_handler.gd" id="5_bqc86"]
+[ext_resource type="PackedScene" uid="uid://dev717smo4nv0" path="res://scenes/fighter_large_2.tscn" id="7_7t888"]
 [ext_resource type="Script" path="res://scenes/area_2d.gd" id="8_ccom2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ef26n"]
@@ -58,5 +59,8 @@ script = ExtResource("8_ccom2")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PackedVector2Array(144, -100, 144, 400, 496, 400, 496, -100, 640, -100, 640, 500, 0, 500, 0, -100)
+
+[node name="Enemy" parent="." instance=ExtResource("7_7t888")]
+position = Vector2(303, -8)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

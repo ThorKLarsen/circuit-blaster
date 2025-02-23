@@ -1,5 +1,7 @@
 extends Control
 
+@export var terminal: CircuitGrid
+
 var grids: Array[CircuitGrid] = []
 var circuits: Array[Circuit] = []
 
@@ -14,12 +16,14 @@ func _ready():
 		if is_instance_of(c, Circuit):
 			add_circuit(c)
 	
-	add_random_circuit()
+	#add_random_circuit()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	if Input.is_action_just_pressed("focus"):
+		add_random_circuit()
 
 
 func add_circuit(circuit: Circuit):
@@ -29,8 +33,15 @@ func add_circuit(circuit: Circuit):
 
 
 func place_circuit(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
+	# Update grid to contain the circuit
 	grid.add_circuit(circuit, coords)
+	# Move the circuit to the appropriate position
 	circuit.position = grid.grid_panels[coords].global_position - global_position
+	# If placed in the terminal, we update player stats.
+	var circuits: Array[Circuit]
+	for c in terminal.circuits.values():
+		circuits.append(c)
+	GameData.player.update_stats(circuits)
 
 
 func remove_circuit(circuit: Circuit):
@@ -52,7 +63,7 @@ func add_random_circuit():
 
 
 func get_random_shape():
-	var probabilities = [0.05, 0.1, 0.1, 0.35, 0.25, 0.1, 0.05]
+	var probabilities = [0.03, 0.1, 0.12, 0.35, 0.25, 0.1, 0.05]
 	var r = randf()
 	var n = 0
 	
@@ -111,7 +122,7 @@ func get_random_ports(shape: Array[Vector2i]):
 func get_random_stats(shape: Array[Vector2i], ports: Array):
 	var n = shape.size()
 	
-	return StatBlock.make_random_circuit_from_level(GameData.stage)
+	return StatBlock.make_random_circuit_from_level(GameData.stage, n)
 
 
 func _on_circuit_dragging_started(circuit: Circuit):

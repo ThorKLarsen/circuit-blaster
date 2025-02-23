@@ -9,7 +9,6 @@ enum EnemyTypes{
 var small_enemies = [
 	Constants.FIGHTER,
 	Constants.FIGHTER_BURST,
-	Constants.KRAKEN,
 ]
 var small_enemy_threat = 1
 var medium_enemies = [

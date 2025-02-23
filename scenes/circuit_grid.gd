@@ -58,6 +58,10 @@ func highlight_clear():
 
 
 func circuit_can_be_placed_at(circuit: Circuit, coords: Vector2i):
+	# In a junk grid, we don't care about position.
+	if junk:
+		return true
+		
 	# Check if Circuit can fit inside grid
 	if coords.x < 0 or coords.y < 0 \
 	or coords.x + circuit.size.x > grid_size.x \

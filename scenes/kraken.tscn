@@ -10,12 +10,13 @@ region = Rect2(16, 128, 16, 16)
 
 [node name="Enemy" instance=ExtResource("1_cgtyi")]
 script = ExtResource("2_mrvse")
-shots_per_round = 10
+shots_per_round = 4
 time_per_shot = 0.1
 shooting_right = false
+attack_speed_mod = 0.7
 
 [node name="Sprite2D" parent="." index="0"]
 texture = SubResource("AtlasTexture_t6inm")
 
 [node name="ShootTimer" parent="." index="2"]
-wait_time = 8.0
+wait_time = 4.0

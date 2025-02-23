@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://dev717smo4nv0"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_lcnyy"]
+[ext_resource type="Script" path="res://scenes/fighter_large_2.gd" id="2_nvcnl"]
+[ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="3_ybbh7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tcb0"]
+atlas = ExtResource("3_ybbh7")
+region = Rect2(176, 160, 48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6h5wl"]
+size = Vector2(48, 48)
+
+[node name="Enemy" instance=ExtResource("1_lcnyy")]
+script = ExtResource("2_nvcnl")
+health_mod = 5.0
+damage_mod = 1.2
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_4tcb0")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_6h5wl")

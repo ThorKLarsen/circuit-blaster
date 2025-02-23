@@ -31,6 +31,8 @@ func _ready():
 	stat_block.speed *= speed_mod
 	
 	attack_timer.wait_time = 1/stat_block.attack_speed
+	attack_timer.stop()
+	attack_timer.start()
 
 
 func _process(delta):

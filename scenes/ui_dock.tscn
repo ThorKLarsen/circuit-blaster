@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cgd3cv33mivf6"]
+[gd_scene load_steps=15 format=4 uid="uid://cgd3cv33mivf6"]
 
 [ext_resource type="Script" path="res://scenes/ui_dock.gd" id="1_ambxt"]
 [ext_resource type="TileSet" uid="uid://dvmpolf2lthil" path="res://new_tile_set.tres" id="1_rupcu"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://scenes/health_bar.gd" id="4_vdykt"]
 [ext_resource type="Script" path="res://scenes/stat_counter.gd" id="5_504ds"]
 [ext_resource type="Script" path="res://scenes/stage_progress_bar.gd" id="6_ywv4h"]
+[ext_resource type="Script" path="res://scenes/stat_counter_health.gd" id="7_yf8ej"]
+[ext_resource type="Script" path="res://scenes/attack_mode_indicator.gd" id="8_5edq4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nfhh"]
 atlas = ExtResource("2_yx3ak")
@@ -23,6 +25,10 @@ region = Rect2(256, 48, 16, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_w3j2e"]
 atlas = ExtResource("2_yx3ak")
 region = Rect2(272, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7yd3"]
+atlas = ExtResource("2_yx3ak")
+region = Rect2(224, 112, 32, 32)
 
 [node name="UiDock" type="Control"]
 z_index = 10
@@ -132,8 +138,7 @@ offset_bottom = 39.0
 text = "Health"
 label_settings = ExtResource("4_dghxv")
 horizontal_alignment = 2
-script = ExtResource("5_504ds")
-stat = "health"
+script = ExtResource("7_yf8ej")
 
 [node name="StatCounter2" type="Label" parent="Stats"]
 layout_mode = 0
@@ -213,3 +218,12 @@ offset_top = 13.0
 offset_right = 15.0
 offset_bottom = 15.0
 color = Color(0.568627, 0.858824, 0.411765, 1)
+
+[node name="AttackModeIndicator" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 320.0
+offset_right = 64.0
+offset_bottom = 352.0
+texture = SubResource("AtlasTexture_u7yd3")
+script = ExtResource("8_5edq4")

@@ -11,7 +11,7 @@ enum Stats{
 
 var level: int
 
-var max_health: int
+var max_health: float
 var health: float
 const base_health = 50
 static func per_level_health(lvl): return lvl * 10 # Average increase pr. level
@@ -19,7 +19,7 @@ var regen: float # Health pr. second
 const base_regen = 0.2
 static func per_level_regen(lvl): return lvl * 0.05
 
-var damage: int
+var damage: float
 const base_damage = 10
 static func per_level_damage(lvl): return lvl * 2 + lvl**2
 var attack_speed: float #  attacks pr. second
@@ -31,7 +31,7 @@ const base_attack_level = 0
 static func per_level_attack_level(lvl): return lvl/5
 
 var speed: float # pixels per second
-const base_speed = 75
+const base_speed = 50
 
 func _init(
 	new_level,
@@ -56,20 +56,22 @@ func add(stat_block: StatBlock):
 	health += stat_block.health
 	regen += stat_block.regen
 	damage += stat_block.damage
-	attack_speed *= stat_block.attack_speed
+	attack_speed += stat_block.attack_speed
 	attack_level += stat_block.attack_level
-	speed *= stat_block.speed
+	speed += stat_block.speed
 	return self
 
 func _to_string():
 	var res = ""
 	for key in get_stats().keys():
+
 		if get_stats()[key] != 0:
 			var n = get_stats()[key]
 
 			res += str(key.capitalize())
-			res += ": " + str(get_stats()[key])
+			res += ": " + str(snapped(n, 0.05))
 			res += "\n"
+
 	return res
 
 func get_stats():
@@ -84,17 +86,34 @@ func get_stats():
 	return stats
 
 
-static func make_random_circuit_from_level(lvl: int):
-	var health = randi_range(int(0.5 * per_level_health(lvl)), int(1.5 * per_level_health(lvl)))
-	var regen = randf_range(0.5 * per_level_regen(lvl), 1.5 * per_level_regen(lvl))
-	regen = snapped(regen, 0.001)
-	var damage = randi_range(int(0.5 * per_level_damage(lvl)), int(1.5 * per_level_damage(lvl)))
-	var attack_speed = randf_range(0.8 * per_level_attack_speed(lvl), 1.2*per_level_attack_speed(lvl))
-	attack_speed = snapped(attack_speed, 0.001)
+static func make_random_circuit_from_level(lvl: int, size: int):
+	
+	# Define stats
+	var health = 0
+	var regen = 0
+	var damage = 0
+	var attack_speed = 0
 	var attack_level = 0
-	if randf() > 0.93: attack_level += 1
-	var speed = randf_range(50, 100)
-	speed = snapped(speed, 0.01)
+	var speed = 0
+	
+	# The number of rolls (each roll can hit a different stat or the same)
+	var n = 1
+	for i in range(size-1):
+		if randf() > 0.4:
+			n += 1
+	
+	print(n)
+	var weights = [10, 5, 10, 8, 2, 7]
+	for i in range(n):
+		match(Global.rand_weighted(range(Stats.size()), weights)):
+			0: health += per_level_health(lvl + 2)
+			1: regen += per_level_regen(lvl + 2)
+			2: damage += per_level_damage(lvl + 2)
+			3: attack_speed += per_level_attack_speed(lvl + 2)
+			4: attack_level += 1
+			5: speed += 20
+
+	
 	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed)
 
 static func make_random_enemy_from_level(lvl: int):
@@ -109,12 +128,12 @@ static func make_random_enemy_from_level(lvl: int):
 	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed)
 
 static func make_base_player():
-	var health = base_health
-	var regen = base_regen
-	var damage = base_damage
+	var health = 70
+	var regen = 0.2
+	var damage = 10
 	var attack_speed = 2.
-	var attack_level = 1
-	var speed = 150
+	var attack_level = 3
+	var speed = 150.
 	return StatBlock.new(1, health, regen, damage, attack_speed, attack_level, speed)
 
 

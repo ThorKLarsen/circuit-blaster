@@ -42,19 +42,29 @@ var atlas_texture_origin: Vector2i
 
 func _ready():
 	tool_tip.hide()
+
+func initialize(
+		new_shape: Array[Vector2i], 
+		new_ports: Array[Port], 
+		new_stat_increases,
+		color: CircuitColor,
+	):
+	circuit_clear()
+	shape = new_shape
+	ports = new_ports
+	stat_increases = new_stat_increases
+	match(color):
+		CircuitColor.GREEN: atlas_texture_origin = TileNames.CIRCUIT_GREEN
+		CircuitColor.RED: atlas_texture_origin = TileNames.CIRCUIT_RED
+		CircuitColor.YELLOW: atlas_texture_origin = TileNames.CIRCUIT_YELLOW
+		CircuitColor.BLUE: atlas_texture_origin = TileNames.CIRCUIT_BLUE
 	
-	#var my_shape: Array[Vector2i] = get_random_shape()
-	#var my_ports: Array[Port] = []
-	#for i in range(5):
-		#var ori = [Vector2i(1,0), Vector2i(-1,0), Vector2i(0,1), Vector2i(0, -1)]
-		#my_ports.append(
-			#Port.new(
-				#Vector2i(randi_range(0, 2), randi_range(0, 2)), ori.pick_random()
-			#)
-		#)
-	#
-	#var my_color = [CircuitColor.GREEN, CircuitColor.RED, CircuitColor.YELLOW, CircuitColor.BLUE].pick_random()
-	#initialize(my_shape, my_ports, stat_increases, my_color)
+	_initialize_circuit_tiles(new_shape)
+	_initialize_port_tiles(new_ports)
+	
+	#for stat in stat_increases.get_stats().keys():
+	tool_tip.get_child(0).text += str(stat_increases)
+	print(stat_increases)
 
 func _process(delta):
 	if is_dragged:
@@ -64,6 +74,7 @@ func _process(delta):
 			delta*20
 		)
 		set_tool_tip()
+
 
 func _input(event):
 	
@@ -87,12 +98,14 @@ func _input(event):
 				_end_drag()
 
 func set_tool_tip():
-	var tool_tip_position = global_position + Vector2(24, -tool_tip.size.y-24)
-	var x_max = get_viewport_rect().size.x - tool_tip.size.x
-	if tool_tip_position.y <= 0:
-		tool_tip_position.y = 0
-	if tool_tip_position.x >= x_max:
-		tool_tip_position.x = x_max
+	var tool_tip_position = global_position + Vector2(-tool_tip.size.x - 32, +24)
+	#var x_max = get_viewport_rect().size.x - tool_tip.size.x
+	#if tool_tip_position.y <= 0:
+		#tool_tip_position.y = 0
+	#if tool_tip_position.x >= x_max:
+		#tool_tip_position.x = x_max
+	##if tool_tip_position.y <= 0 and tool_tip_position.x >= x_max:
+		##tool_tip_position.x = global_position.x - tool_tip.size.x - 32
 	tool_tip.global_position = tool_tip_position
 
 func _start_drag(event):
@@ -111,28 +124,7 @@ func _end_drag():
 	Global.dragging_object = null
 	is_dragged = false
 	z_index =0
-
-func initialize(
-		new_shape: Array[Vector2i], 
-		new_ports: Array[Port], 
-		new_stat_increases,
-		color: CircuitColor,
-	):
-	circuit_clear()
-	shape = new_shape
-	ports = new_ports
-	stat_increases = new_stat_increases
-	match(color):
-		CircuitColor.GREEN: atlas_texture_origin = TileNames.CIRCUIT_GREEN
-		CircuitColor.RED: atlas_texture_origin = TileNames.CIRCUIT_RED
-		CircuitColor.YELLOW: atlas_texture_origin = TileNames.CIRCUIT_YELLOW
-		CircuitColor.BLUE: atlas_texture_origin = TileNames.CIRCUIT_BLUE
 	
-	_initialize_circuit_tiles(new_shape)
-	_initialize_port_tiles(new_ports)
-	
-	#for stat in stat_increases.get_stats().keys():
-	tool_tip.get_child(0).text += str(stat_increases)
 
 # Sets the corresponding tiles in the Circuit layer
 func _initialize_circuit_tiles(shape):

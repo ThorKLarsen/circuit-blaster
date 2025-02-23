@@ -37,12 +37,13 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("focus"):
 		stat_block.attack_level += 1
 		print("att_lvl: ", stat_block.attack_level)
+		
 	
 	if Input.is_action_just_pressed("next_attack_mode"):
 		attack_mode += 1
 		if attack_mode > 2:
 			attack_mode = 0
-		print(attack_mode)
+		SignalBus.attack_mode_changed.emit(attack_mode)
 	
 	if direction:
 		velocity = direction * cur_speed
@@ -110,3 +111,9 @@ func spawn_bullet(
 func hit(value):
 	stat_block.health -= value
 	print("player hit: ", value, ' ', stat_block.health)
+
+
+func update_stats(circuits: Array[Circuit]):
+	stat_block = StatBlock.make_base_player()
+	for c in circuits:
+		stat_block.add(c.stat_increases)

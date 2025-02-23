@@ -77,9 +77,9 @@ func shoot_wide(attack_level: int):
 	
 
 func shoot_burst(attack_level: int, attack_speed: float):
-	var interval = 0.03
+	var interval = 0.06
 	var i = 0
-	attack_speed *= 0.6
+	attack_speed *= 0.85
 	while attack_speed > 0:
 		if attack_speed > 1:
 			get_tree().create_timer(interval * i).timeout.connect(

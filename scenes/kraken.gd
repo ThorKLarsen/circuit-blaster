@@ -17,9 +17,10 @@ var timer = 0.0
 func _ready():
 	super._ready()
 	prefered_x = position.x
+	
 
 func move(delta):
-	
+	print(attack_timer.time_left)
 	if state == State.SHOOTING:
 		timer += delta
 		if timer >= time_per_shot:
@@ -32,12 +33,12 @@ func move(delta):
 				state = State.MOVING
 				
 		if shooting_right:
-			velocity = Vector2(8 * stat_block.speed * delta, 0)
+			velocity = Vector2(stat_block.speed, 0)
 		else:
-			velocity = Vector2(-8 * stat_block.speed * delta, 0)
+			velocity = Vector2(-stat_block.speed, 0)
 		
 	elif state == State.MOVING:
-		velocity.y = stat_block.speed * delta
+		velocity.y = stat_block.speed
 		velocity.x = lerp(prefered_x - position.x, 0., delta)
 
 func shoot():
@@ -48,8 +49,8 @@ func _fire_shot():
 		get_world_2d(),
 		BulletHandler.BulletTypes.ENEMY_BULLET,
 		position,
-		Vector2(0, 40 + velocity.y),
-		10,
+		Vector2(0, 50),
+		stat_block.damage,
 		BulletHandler.bullet_texture,
 		Rect2i(16, 0, 16, 16),
 	)

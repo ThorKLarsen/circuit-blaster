@@ -9,7 +9,6 @@ var wait: float = 3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
-	speed = 1200
 
 func move(delta):
 	
@@ -25,7 +24,7 @@ func move(delta):
 		velocity = Vector2(0, 0)
 		timer -= delta
 	else:
-		velocity = position.direction_to(target_pos) * speed * delta
+		velocity = position.direction_to(target_pos) * stat_block.speed
 
 func shoot():
 	pass

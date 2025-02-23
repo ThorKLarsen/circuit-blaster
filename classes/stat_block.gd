@@ -51,9 +51,11 @@ func _init(
 	attack_level = new_attack_level
 	speed = new_speed
 
+# Adds two statblocks together.
+# Health stat is not symmetic! A.add(B) had the current health of block A
 func add(stat_block: StatBlock):
-	max_health = max(max_health, stat_block.max_health)
-	health += stat_block.health
+	max_health += stat_block.max_health
+	health = health
 	regen += stat_block.regen
 	damage += stat_block.damage
 	attack_speed += stat_block.attack_speed

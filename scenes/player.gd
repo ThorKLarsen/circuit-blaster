@@ -71,6 +71,9 @@ func _physics_process(delta):
 	set_animation(delta)
 	move_and_slide()
 	#GameData.player_position = position
+	
+	if stat_block.health <= stat_block.max_health:
+		stat_block.health += stat_block.regen * delta
 
 func set_animation(delta):
 	if sign(velocity.x) == 1:
@@ -114,6 +117,8 @@ func hit(value):
 
 
 func update_stats(circuits: Array[Circuit]):
+	var cur_health = stat_block.health
 	stat_block = StatBlock.make_base_player()
+	stat_block.health = min(cur_health, stat_block.max_health)
 	for c in circuits:
 		stat_block.add(c.stat_increases)

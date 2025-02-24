@@ -16,18 +16,18 @@ var medium_enemies = [
 	Constants.VIRUS,
 	Constants.SNAKE,
 ]
-var medium_enemy_threat = 10
 
+var medium_enemy_threat = 10
 var large_enemy_threat = 50
 
-var BaseEnemy = load("res://scenes/enemy.tscn")
-
+# Number of lanes we cna spawn enemies into
 var spawn_lanes = 5
 @onready var lane_width = (Constants.game_area_size.x - 2*Constants.SIDE_MARGIN_WIDTH)/spawn_lanes
 
+# Time from first to last spawn in a wave.
 var wave_time = 5
-var wave_base_threat = 20
-var wave_threat_per_level = 5
+# 
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,7 +42,7 @@ func wave_create(stage: int) -> Array[SpawnResource]:
 	var r = randf()
 	var res: Array[SpawnResource] = []
 	
-	var threat = wave_base_threat + wave_threat_per_level * stage
+	var threat = get_threat(stage)
 	threat *= randfn(1, 0.2)
 	
 	# Only popcorn wave
@@ -109,3 +109,6 @@ func make_enemy_resource(enemy: PackedScene, lane: int, time_offset: float):
 
 func get_lane_center(lane: int):
 	return Vector2(Constants.left_margin + (lane+0.5)*lane_width, 0)
+
+func get_threat(stage: int = GameData.stage):
+	return 10 + 3 * stage + round(0.2 * stage**1.3)

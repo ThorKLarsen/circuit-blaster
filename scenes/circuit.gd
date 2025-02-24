@@ -64,7 +64,6 @@ func initialize(
 	
 	#for stat in stat_increases.get_stats().keys():
 	tool_tip.get_child(0).text += str(stat_increases)
-	print(stat_increases)
 
 func _process(delta):
 	if is_dragged:

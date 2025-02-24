@@ -14,10 +14,12 @@ func _ready():
 	GameData.game = self
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+
 	_stage_timer -= delta
+	# When the stage is over, we 
 	if _stage_timer <= 0:
 		waves.clear()
 		wave_times.clear()
@@ -26,7 +28,12 @@ func _process(delta):
 		GameData.stage += 1
 		for i in range(waves_per_stage):
 			var wave = enemy_spawner.wave_create(GameData.stage)
-			var time = 5 + i * (stage_time*0.9)/waves_per_stage
+			var time = randfn(
+				i * stage_time/(waves_per_stage) + stage_time/(waves_per_stage*2),
+				sqrt(stage_time/waves_per_stage)
+			)
+			time = clampf(time, 5, stage_time)
+			
 			waves.append(wave)
 			wave_times.append(time)
 			print("Wave at: ", time)

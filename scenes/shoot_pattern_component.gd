@@ -7,7 +7,7 @@ enum PatternTypes{
 	Burst
 }
 
-@export var bullet_speed: float = 350
+@export var bullet_speed: float = 500
 @export var bullet_type: BulletHandler.BulletTypes = BulletHandler.BulletTypes.PLAYER_BULLET
 @export var forward_direction: Vector2 = Vector2(0, -1)
 

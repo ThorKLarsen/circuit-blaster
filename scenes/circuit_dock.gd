@@ -130,7 +130,7 @@ func _on_circuit_dragging_started(circuit: Circuit):
 
 
 func _on_circuit_dragging_ended(circuit: Circuit):
-	print("dropped ", circuit)
+
 	# Variable to remember if we succeded on placing the circuit
 	var circuit_placed = false
 	
@@ -139,7 +139,6 @@ func _on_circuit_dragging_ended(circuit: Circuit):
 			var coords = grid.mouse_cell_coords
 
 			if grid.placable and grid.circuit_can_be_placed_at(circuit, coords):
-				print(grid.name)
 				place_circuit(circuit, grid, coords)
 				circuit_placed = true
 				break

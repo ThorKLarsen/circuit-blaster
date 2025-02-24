@@ -33,6 +33,16 @@ static func per_level_attack_level(lvl): return lvl/5
 var speed: float # pixels per second
 const base_speed = 50
 
+var increase_level: Dictionary = {}
+var stat_abbreviations: Dictionary = {
+	Stats.find_key(Stats.HEALTH): "Health",
+	Stats.find_key(Stats.REGEN): "Regen",
+	Stats.find_key(Stats.DAMAGE): "Damage",
+	Stats.find_key(Stats.ATTACK_SPEED): "AttSpd",
+	Stats.find_key(Stats.ATTACK_LEVEL): "AttLvl",
+	Stats.find_key(Stats.SPEED): "Speed",
+}
+
 func _init(
 	new_level,
 	new_health,
@@ -41,7 +51,9 @@ func _init(
 	new_attack_speed,
 	new_attack_level,
 	new_speed,
+	new_increase_level = null
 ):
+
 	level = new_level
 	max_health = new_health
 	health = new_health
@@ -50,6 +62,13 @@ func _init(
 	attack_speed = new_attack_speed
 	attack_level = new_attack_level
 	speed = new_speed
+
+	if new_increase_level == null:
+		for key in Stats:
+			increase_level[key] = 0
+	else:
+		increase_level = new_increase_level
+
 
 # Adds two statblocks together.
 # Health stat is not symmetic! A.add(B) had the current health of block A
@@ -64,29 +83,33 @@ func add(stat_block: StatBlock):
 	return self
 
 func _to_string():
-	var res = ""
-	for key in get_stats().keys():
+	var res = "LEVEL: " + str(level) + "\n"
+	var i = 0
+	for key in Stats.keys():
 
 		if get_stats()[key] != 0:
 			var n = get_stats()[key]
 
-			res += str(key.capitalize())
-			res += ": " + str(snapped(n, 0.05))
+			res += stat_abbreviations[key]
+			res += "\t" + "☼".repeat(increase_level[key]) + "\n"
+			res += "\t" + str(snapped(n, 0.05))
 			res += "\n"
 
 	return res
 
 func get_stats():
 	var stats = {
-		"health": health,
-		"regen": regen,
-		"damage": damage,
-		"attack_speed": attack_speed,
-		"attack_level": attack_level,
-		"speed": speed
-	}
+		Stats.find_key(Stats.HEALTH): health,
+		Stats.find_key(Stats.REGEN): regen,
+		Stats.find_key(Stats.DAMAGE): damage,
+		Stats.find_key(Stats.ATTACK_SPEED): attack_speed,
+		Stats.find_key(Stats.ATTACK_LEVEL): attack_level,
+		Stats.find_key(Stats.SPEED): speed
+		}
 	return stats
 
+func get_stat(stat: Stats):
+	return get_stats()[stat]
 
 static func make_random_circuit_from_level(lvl: int, size: int):
 	
@@ -97,6 +120,9 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 	var attack_speed = 0
 	var attack_level = 0
 	var speed = 0
+	var increase_level: Dictionary = {}
+	for key in Stats:
+		increase_level[key] = 0
 	
 	# The number of rolls (each roll can hit a different stat or the same)
 	var n = 1
@@ -104,19 +130,19 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 		if randf() > 0.4:
 			n += 1
 	
-	print(n)
 	var weights = [10, 5, 10, 8, 2, 7]
 	for i in range(n):
-		match(Global.rand_weighted(range(Stats.size()), weights)):
-			0: health += per_level_health(lvl + 2)
-			1: regen += per_level_regen(lvl + 2)
-			2: damage += per_level_damage(lvl + 2)
-			3: attack_speed += per_level_attack_speed(lvl + 2)
-			4: attack_level += 1
-			5: speed += 20
+		var stat = Global.rand_weighted(Stats.values(), weights)
+		increase_level[Stats.find_key(stat)] += 1
+		match(stat):
+			Stats.HEALTH: health += per_level_health(lvl + 2)
+			Stats.REGEN: regen += per_level_regen(lvl + 2)
+			Stats.DAMAGE: damage += per_level_damage(lvl + 2)
+			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl + 2)
+			Stats.ATTACK_LEVEL: attack_level += 1
+			Stats.SPEED: speed += 20
 
-	
-	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed)
+	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed, increase_level)
 
 static func make_random_enemy_from_level(lvl: int):
 	var health = base_health + randi_range(int(0.5 * per_level_health(lvl)), int(1.5 * per_level_health(lvl)))
@@ -133,8 +159,8 @@ static func make_base_player():
 	var health = 70
 	var regen = 0.2
 	var damage = 10
-	var attack_speed = 2.
-	var attack_level = 3
+	var attack_speed = 1.5
+	var attack_level = 1
 	var speed = 150.
 	return StatBlock.new(1, health, regen, damage, attack_speed, attack_level, speed)
 

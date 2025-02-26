@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dy0nbrkfgimno"]
 
-[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_22brf"]
-[ext_resource type="Script" path="res://scenes/snake_head.gd" id="2_5o7cx"]
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemies/enemy.tscn" id="1_22brf"]
+[ext_resource type="Script" path="res://scenes/enemies/snake_head.gd" id="2_5o7cx"]
 [ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="3_vxric"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b5okp"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ck03ckfkvpigv"]
 
-[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_abcq6"]
-[ext_resource type="Script" path="res://scenes/bacteria.gd" id="2_2f81t"]
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemies/enemy.tscn" id="1_abcq6"]
+[ext_resource type="Script" path="res://scenes/enemies/bacteria.gd" id="2_2f81t"]
 [ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="2_xom3i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h6512"]

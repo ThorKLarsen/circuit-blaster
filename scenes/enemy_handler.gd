@@ -25,8 +25,7 @@ var spawn_lanes = 5
 @onready var lane_width = (Constants.game_area_size.x - 2*Constants.SIDE_MARGIN_WIDTH)/spawn_lanes
 
 # Time from first to last spawn in a wave.
-var wave_time = 5
-# 
+var wave_time = 3
 
 
 # Called when the node enters the scene tree for the first time.
@@ -43,7 +42,6 @@ func wave_create(stage: int) -> Array[SpawnResource]:
 	var res: Array[SpawnResource] = []
 	
 	var threat = get_threat(stage)
-	threat *= randfn(1, 0.2)
 	
 	# Only popcorn wave
 	if r < 0.4:
@@ -82,7 +80,6 @@ func wave_create(stage: int) -> Array[SpawnResource]:
 	#else:
 		#return
 		
-
 	return res
 
 func spawm_wave(wave: Array[SpawnResource]):
@@ -111,4 +108,6 @@ func get_lane_center(lane: int):
 	return Vector2(Constants.left_margin + (lane+0.5)*lane_width, 0)
 
 func get_threat(stage: int = GameData.stage):
-	return 10 + 3 * stage + round(0.2 * stage**1.3)
+	var threat = 10 + 3 * stage + round(0.2 * stage**1.3)
+	threat *= randfn(1, 0.2)
+	return threat

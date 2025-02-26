@@ -137,7 +137,7 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 		match(stat):
 			Stats.HEALTH: health += per_level_health(lvl + 2)
 			Stats.REGEN: regen += per_level_regen(lvl + 2)
-			Stats.DAMAGE: damage += per_level_damage(lvl + 2)
+			Stats.DAMAGE: damage += per_level_damage(lvl + 2) * 0.2
 			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl + 2)
 			Stats.ATTACK_LEVEL: attack_level += 1
 			Stats.SPEED: speed += 20
@@ -145,10 +145,10 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed, increase_level)
 
 static func make_random_enemy_from_level(lvl: int):
-	var health = base_health + randi_range(int(0.5 * per_level_health(lvl)), int(1.5 * per_level_health(lvl)))
-	var regen = base_regen + randf_range(0.5 * per_level_regen(lvl), 1.5 * per_level_regen(lvl))
+	var health = 60. + randf_range(0.5, 1.5) * (lvl * 5)
+	var regen = 1. + 0.5 * lvl
 	regen = snapped(regen, 0.001)
-	var damage = base_damage + randi_range(int(0.5 * per_level_damage(lvl)), int(1.5 * per_level_damage(lvl)))
+	var damage = 10 + randi_range(int(0.5 * per_level_damage(lvl)), int(1.5 * per_level_damage(lvl)))
 	var attack_speed = base_attack_speed
 	var attack_level = per_level_attack_level(lvl)
 	if randf() > 0.97: attack_level += 1

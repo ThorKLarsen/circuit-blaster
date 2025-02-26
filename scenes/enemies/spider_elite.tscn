@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwm0dldhrcr82"]
 
-[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_pbxij"]
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemies/enemy.tscn" id="1_pbxij"]
 [ext_resource type="Texture2D" uid="uid://cana5dojyovpe" path="res://assets/spider_elite.png" id="2_exs3x"]
-[ext_resource type="Script" path="res://scenes/spider_elite.gd" id="2_qll24"]
+[ext_resource type="Script" path="res://scenes/enemies/spider_elite.gd" id="2_qll24"]
 
 [node name="Enemy" instance=ExtResource("1_pbxij")]
 script = ExtResource("2_qll24")

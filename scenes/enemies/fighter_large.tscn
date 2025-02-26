@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bw4chsor7b2do"]
 
-[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_ug5ej"]
-[ext_resource type="Script" path="res://scenes/fighter_large.gd" id="2_nkc8d"]
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemies/enemy.tscn" id="1_ug5ej"]
+[ext_resource type="Script" path="res://scenes/enemies/fighter_large.gd" id="2_nkc8d"]
 [ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="3_1ie7o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tv1ly"]
@@ -24,6 +24,7 @@ script = ExtResource("2_nkc8d")
 health_mod = 5.0
 damage_mod = 1.5
 speed_mod = 0.2
+threat = 10
 
 [node name="Sprite2D" parent="." index="0"]
 texture = SubResource("AtlasTexture_tv1ly")

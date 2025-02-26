@@ -100,7 +100,7 @@ func _shoot(position: Vector2, velocity: Vector2):
 		BulletHandler.BulletTypes.PLAYER_BULLET,
 		position,
 		velocity,
-		agent.damage,
+		agent.get_damage(),
 		load("res://assets/CB_spritesheet.png"),
 		Rect2i(16, 0, 16, 16)
 	)
@@ -111,10 +111,12 @@ func _shoot_from_agent(offset: Vector2, velocity: Vector2):
 		BulletHandler.BulletTypes.PLAYER_BULLET,
 		agent.position + offset,
 		velocity,
-		agent.stat_block.damage,
+		agent.get_damage(),
 		load("res://assets/CB_spritesheet.png"),
 		Rect2i(16, 0, 16, 16)
 	)
+
+
 
 func shoot_straight_simple():
 	_shoot(agent.global_position, forward_direction * bullet_speed)

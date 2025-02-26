@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://mi6l28r0q2sp"]
 
-[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemy.tscn" id="1_cgtyi"]
-[ext_resource type="Script" path="res://scenes/kraken.gd" id="2_mrvse"]
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemies/enemy.tscn" id="1_cgtyi"]
+[ext_resource type="Script" path="res://scenes/enemies/kraken.gd" id="2_mrvse"]
 [ext_resource type="Texture2D" uid="uid://ga3r6daur01c" path="res://assets/CB_spritesheet.png" id="2_qbx86"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6inm"]

@@ -70,7 +70,7 @@ func shoot():
 	
 
 func spawn_link():
-	var link_scene = preload("res://scenes/snake_head.tscn")
+	var link_scene = preload("res://scenes/enemies/snake_head.tscn")
 	var link = link_scene.instantiate()
 	link.is_head = false
 	link.number_of_links = number_of_links-1

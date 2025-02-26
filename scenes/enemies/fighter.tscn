@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://brro2p555nqc8"]
+
+[ext_resource type="PackedScene" uid="uid://bgvue8ra64xbc" path="res://scenes/enemies/enemy.tscn" id="1_n8uuc"]
+[ext_resource type="Script" path="res://scenes/enemies/fighter.gd" id="2_ah51r"]
+
+[node name="Enemy" instance=ExtResource("1_n8uuc")]
+script = ExtResource("2_ah51r")
+speed_mod = 0.5

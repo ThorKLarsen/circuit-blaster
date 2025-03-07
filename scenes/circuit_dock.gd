@@ -35,11 +35,19 @@ func add_circuit(circuit: Circuit):
 	circuit.dragging_ended.connect(_on_circuit_dragging_ended.bind(circuit))
 
 
+func set_circuit_position(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
+	circuit.position = grid.grid_panels[coords].global_position - global_position
+
 func place_circuit(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
 	# Update grid to contain the circuit
 	grid.add_circuit(circuit, coords)
+	
 	# Move the circuit to the appropriate position
-	circuit.position = grid.grid_panels[coords].global_position - global_position
+	#circuit.position = grid.grid_panels[coords].global_position - global_position
+	set_circuit_position.bind(circuit, grid, coords).call_deferred()
+
+	
+	
 	# If placed in the terminal, we update player stats.
 	var circuits: Array[Circuit]
 	for c in terminal.circuits.values():
@@ -136,6 +144,7 @@ func get_random_stats(shape: Array[Vector2i], ports: Array):
 
 
 func send_circuit_to_input(circuit: Circuit):
+	input.clear()
 	place_circuit(circuit, input, Vector2i(0, 0))
 	
 

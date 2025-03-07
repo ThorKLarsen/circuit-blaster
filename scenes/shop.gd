@@ -1,10 +1,11 @@
 extends Control
 
+@export var dock: CircuitDock
 @export var shop_panels: Array[ShopPanel]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -14,8 +15,13 @@ func _process(delta):
 
 func _input(event):
 	if event.is_action_pressed("focus"):
-		stock()
+		open_shop()
+
+func open_shop():
+	show()
+	stock()
 
 func stock():
 	for sp in shop_panels:
 		sp.stock()
+		print(sp.grid.position, sp.grid.global_position, sp.grid)

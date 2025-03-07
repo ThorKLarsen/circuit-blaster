@@ -108,6 +108,11 @@ func empty():
 	for c in circuits.values():
 		remove_circuit(c)
 
+
+func clear():
+	for c in circuits.values():
+		c.queue_free.call_deferred()
+
 func _on_cell_mouse_entered(coords: Vector2i):
 	mouse_cell_coords = coords
 	if !Global.is_dragging:

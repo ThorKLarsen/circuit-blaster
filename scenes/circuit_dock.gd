@@ -1,6 +1,9 @@
-extends Control
+class_name CircuitDock extends Control 
 
 @export var terminal: CircuitGrid
+@export var input: CircuitGrid
+@export var storage: CircuitGrid
+@export var junk: CircuitGrid
 
 var grids: Array[CircuitGrid] = []
 var circuits: Array[Circuit] = []
@@ -47,8 +50,7 @@ func place_circuit(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
 func remove_circuit(circuit: Circuit):
 	circuits.erase(circuit)
 
-
-func add_random_circuit():
+func random_circuit() -> Circuit:
 	var color = Circuit.CircuitColor.values().pick_random()
 	var shape = get_random_shape()
 	var ports = get_random_ports(shape)
@@ -56,10 +58,18 @@ func add_random_circuit():
 	
 	var circuit_scene: PackedScene = load("res://scenes/circuit.tscn")
 	var circuit = circuit_scene.instantiate()
-	add_child(circuit)
 	circuit.initialize(shape, ports, stats, color)
+	return circuit
+
+func add_random_circuit(grid = input):
+	#if grid == null:
+		#grid = $Input
+	
+	var circuit = random_circuit()
+	add_child(circuit)
 	add_circuit(circuit)
-	place_circuit(circuit, $Input, Vector2i(0, 0))
+	if grid != null:
+		place_circuit(circuit, grid, Vector2i(0, 0))
 
 
 func get_random_shape():
@@ -123,6 +133,11 @@ func get_random_stats(shape: Array[Vector2i], ports: Array):
 	var n = shape.size()
 	
 	return StatBlock.make_random_circuit_from_level(GameData.stage, n)
+
+
+func send_circuit_to_input(circuit: Circuit):
+	place_circuit(circuit, input, Vector2i(0, 0))
+	
 
 
 func _on_circuit_dragging_started(circuit: Circuit):

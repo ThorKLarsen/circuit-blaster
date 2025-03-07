@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://ked11sr8f1vi"]
+[gd_scene load_steps=11 format=3 uid="uid://ked11sr8f1vi"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_3nhuv"]
 [ext_resource type="PackedScene" uid="uid://clxyr76pfij52" path="res://scenes/player.tscn" id="1_76287"]
 [ext_resource type="PackedScene" uid="uid://cgd3cv33mivf6" path="res://scenes/ui_dock.tscn" id="3_sjijk"]
+[ext_resource type="Script" path="res://scenes/shop.gd" id="4_0k03l"]
 [ext_resource type="PackedScene" uid="uid://2l2itfgqn56e" path="res://scenes/circuit_dock.tscn" id="4_h70ld"]
 [ext_resource type="Script" path="res://scenes/enemy_handler.gd" id="5_bqc86"]
+[ext_resource type="PackedScene" uid="uid://daqxtkt28yhuy" path="res://scenes/shop_panel.tscn" id="5_y224n"]
 [ext_resource type="Script" path="res://scenes/area_2d.gd" id="8_ccom2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ef26n"]
@@ -24,6 +26,37 @@ enemy_spawner = NodePath("EnemySpawner")
 [node name="CircuitDock" parent="CanvasLayer" instance=ExtResource("4_h70ld")]
 offset_left = 464.0
 offset_right = 464.0
+
+[node name="Shop" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("shop_panels")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 176.0
+offset_top = 64.0
+offset_right = 464.0
+offset_bottom = 215.0
+script = ExtResource("4_0k03l")
+shop_panels = [NodePath("HBoxContainer/ShopPanel"), NodePath("HBoxContainer/ShopPanel2"), NodePath("HBoxContainer/ShopPanel3")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Shop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ShopPanel" parent="CanvasLayer/Shop/HBoxContainer" node_paths=PackedStringArray("dock") instance=ExtResource("5_y224n")]
+layout_mode = 2
+dock = NodePath("../../../CircuitDock")
+
+[node name="ShopPanel2" parent="CanvasLayer/Shop/HBoxContainer" node_paths=PackedStringArray("dock") instance=ExtResource("5_y224n")]
+layout_mode = 2
+dock = NodePath("../../../CircuitDock")
+
+[node name="ShopPanel3" parent="CanvasLayer/Shop/HBoxContainer" node_paths=PackedStringArray("dock") instance=ExtResource("5_y224n")]
+layout_mode = 2
+dock = NodePath("../../../CircuitDock")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("5_bqc86")

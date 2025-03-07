@@ -108,6 +108,6 @@ func get_lane_center(lane: int):
 	return Vector2(Constants.left_margin + (lane+0.5)*lane_width, 0)
 
 func get_threat(stage: int = GameData.stage):
-	var threat = 10 + 3 * stage + round(0.2 * stage**1.3)
+	var threat = 5 + 3 * stage + round(0.2 * stage**1.3)
 	threat *= randfn(1, 0.2)
 	return threat

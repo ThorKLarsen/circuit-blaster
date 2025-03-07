@@ -4,6 +4,7 @@ class_name CircuitGrid extends GridContainer
 @export var grid_size: Vector2i = Vector2i(4, 4)
 @export var placable: bool = true
 @export var junk: bool = false
+@export var draggable: bool = true
 @export var cell_node: Control
 @export var locked_cells: Array[Vector2i] = []
 
@@ -98,11 +99,14 @@ func add_circuit(circuit: Circuit, coords: Vector2i):
 	# Add circuit to dictionary
 	circuits[coords] = circuit
 
-
+# Removes a circuit from grid. Does not free the circuit nor unparent it
 func remove_circuit(circuit: Circuit):
 	# Remove circuit from dict
 	circuits.erase(circuits.find_key(circuit))
 
+func empty():
+	for c in circuits.values():
+		remove_circuit(c)
 
 func _on_cell_mouse_entered(coords: Vector2i):
 	mouse_cell_coords = coords

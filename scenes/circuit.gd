@@ -32,7 +32,7 @@ var shape: Array[Vector2i]
 var ports: Array[Port]
 var stat_increases: StatBlock
 #var stat_increases: Array = [10, 0, 0, 0, 0,] # Dmg, attspd, hp, regen, speed
-var grid
+var grid: CircuitGrid
 
 var draggable: bool = true
 var is_dragged: bool = false
@@ -88,6 +88,8 @@ func _input(event):
 	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
+			if !grid.draggable:
+				return
 			# Drag and drop
 			if event.pressed:
 				var cell = local_to_map(to_local(event.position))

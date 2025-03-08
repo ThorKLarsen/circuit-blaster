@@ -5,6 +5,7 @@ class_name CircuitGrid extends GridContainer
 @export var placable: bool = true
 @export var junk: bool = false
 @export var draggable: bool = true
+@export var is_terminal: bool = false
 @export var cell_node: Control
 @export var locked_cells: Array[Vector2i] = []
 
@@ -98,11 +99,39 @@ func add_circuit(circuit: Circuit, coords: Vector2i):
 
 	# Add circuit to dictionary
 	circuits[coords] = circuit
+	
+	update_port_connections()
+
+func update_port_connections():
+	# We only connect ports in the terminal
+	if !is_terminal:
+		return
+		
+	print("Checking port connections")
+	
+	for c1_pos in circuits.keys():
+		var c1:Circuit = circuits[c1_pos]
+		for port:Circuit.Port in c1.ports:
+			if port.orientation in [Vector2i(0, 1), Vector2i(1, 0)]:
+				c1.conn_layer.erase_cell(port.location)
+				for c2_pos in circuits.keys():
+					var c2:Circuit = circuits[c2_pos]
+					if c1 == c2:
+						continue
+					for target_port in c2.ports:
+						print(c1_pos, port.location, port.orientation)
+						print(c2_pos, target_port.location, target_port.orientation)
+						if target_port.location + c2_pos == port.location + c1_pos + port.orientation\
+						and target_port.orientation == -1 * port.orientation:
+							print("Yes ******************")
+							c1.set_connection(port.location, port.orientation)
+
 
 # Removes a circuit from grid. Does not free the circuit nor unparent it
 func remove_circuit(circuit: Circuit):
 	# Remove circuit from dict
 	circuits.erase(circuits.find_key(circuit))
+	update_port_connections()
 
 func empty():
 	for c in circuits.values():
@@ -111,7 +140,9 @@ func empty():
 
 func clear():
 	for c in circuits.values():
+		remove_circuit(c)
 		c.queue_free.call_deferred()
+
 
 func _on_cell_mouse_entered(coords: Vector2i):
 	mouse_cell_coords = coords

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cgd3cv33mivf6"]
+[gd_scene load_steps=18 format=4 uid="uid://cgd3cv33mivf6"]
 
 [ext_resource type="Script" path="res://scenes/ui_dock.gd" id="1_ambxt"]
 [ext_resource type="TileSet" uid="uid://dvmpolf2lthil" path="res://new_tile_set.tres" id="1_rupcu"]
@@ -27,9 +27,17 @@ region = Rect2(256, 48, 16, 48)
 atlas = ExtResource("2_yx3ak")
 region = Rect2(272, 48, 16, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u7yd3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2gt4"]
 atlas = ExtResource("2_yx3ak")
-region = Rect2(224, 112, 32, 32)
+region = Rect2(256, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynq3x"]
+atlas = ExtResource("2_yx3ak")
+region = Rect2(288, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vten2"]
+atlas = ExtResource("2_yx3ak")
+region = Rect2(224, 128, 32, 32)
 
 [node name="UiDock" type="Control"]
 z_index = 10
@@ -219,14 +227,36 @@ offset_right = 15.0
 offset_bottom = 15.0
 color = Color(0.568627, 0.858824, 0.411765, 1)
 
-[node name="AttackModeIndicator" type="TextureRect" parent="Control"]
-layout_mode = 0
+[node name="AttackModeIndicator" type="Control" parent="Control" node_paths=PackedStringArray("straight_indicator", "burst_indicator", "wide_indicator")]
+anchors_preset = 0
 offset_left = 32.0
 offset_top = 320.0
 offset_right = 64.0
 offset_bottom = 352.0
-texture = SubResource("AtlasTexture_u7yd3")
 script = ExtResource("8_5edq4")
+straight_indicator = NodePath("StraightIndicator")
+burst_indicator = NodePath("BurstIndicator")
+wide_indicator = NodePath("WideIndicator")
+
+[node name="StraightIndicator" type="TextureRect" parent="Control/AttackModeIndicator"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = SubResource("AtlasTexture_g2gt4")
+
+[node name="BurstIndicator" type="TextureRect" parent="Control/AttackModeIndicator"]
+layout_mode = 0
+offset_left = 96.0
+offset_right = 128.0
+offset_bottom = 32.0
+texture = SubResource("AtlasTexture_ynq3x")
+
+[node name="WideIndicator" type="TextureRect" parent="Control/AttackModeIndicator"]
+layout_mode = 0
+offset_left = 48.0
+offset_right = 80.0
+offset_bottom = 32.0
+texture = SubResource("AtlasTexture_vten2")
 
 [node name="Control2" type="Label" parent="."]
 layout_mode = 0

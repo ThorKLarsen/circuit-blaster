@@ -4,33 +4,43 @@
 [ext_resource type="PackedScene" uid="uid://ds481qcub1plw" path="res://scenes/circuit_grid.tscn" id="2_wwymc"]
 [ext_resource type="LabelSettings" uid="uid://cd7bmmnagil3v" path="res://UI_text_settings.tres" id="3_y4xdu"]
 
-[node name="ShopPanel" type="Panel" node_paths=PackedStringArray("grid")]
+[node name="ShopPanel" type="Panel" node_paths=PackedStringArray("grid", "desc_label")]
 custom_minimum_size = Vector2(80, 0)
 offset_right = 80.0
 offset_bottom = 142.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_rvi7d")
-grid = NodePath("VBoxContainer/CircuitGrid")
+grid = NodePath("MarginContainer/VBoxContainer/CircuitGrid")
+desc_label = NodePath("MarginContainer/VBoxContainer/DescriptionLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -8.0
-offset_right = 8.0
-offset_bottom = 16.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
 
-[node name="CircuitGrid" parent="VBoxContainer" instance=ExtResource("2_wwymc")]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="CircuitGrid" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_wwymc")]
+layout_mode = 2
+size_flags_horizontal = 4
 placable = false
 draggable = false
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(70, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Button"]
+[node name="ButtonLabel" type="Label" parent="MarginContainer/VBoxContainer/Button"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -46,4 +56,11 @@ grow_vertical = 2
 text = "Install"
 label_settings = ExtResource("3_y4xdu")
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="buy"]
+[node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Level:1"
+autowrap_mode = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="buy"]

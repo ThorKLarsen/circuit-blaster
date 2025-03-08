@@ -1,7 +1,14 @@
 class_name Game extends Node2D
 
+enum GameState{
+	Menu,
+	Stage,
+	Shop
+}
+
 @export var enemy_spawner: EnemySpawner
 
+var game_state = GameState.Stage
 var stage_time: float = 60.0
 var _stage_timer = 0
 var waves_per_stage = 4
@@ -14,21 +21,24 @@ var wave_times = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	GameData.game = self
+	open_shop()
 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-
-	_stage_timer -= delta
+	
+	if _stage_timer > 0:
+		_stage_timer -= delta
 	# When the stage is over, we 
 	if _stage_timer <= 0:
-		if GameData.stage%shop_interval == 0 and GameData.stage != 0:
+		if game_state != GameState.Shop:
 			open_shop()
-		next_stage()
+
 
 
 func next_stage():
+	game_state = GameState.Stage
 	waves.clear()
 	wave_times.clear()
 	
@@ -40,7 +50,7 @@ func next_stage():
 			i * stage_time/(waves_per_stage) + stage_time/(waves_per_stage*2),
 			sqrt(stage_time/waves_per_stage)
 		)
-		time = clampf(time, 5, stage_time)
+		time = clampf(time, 5, stage_time - 5)
 		
 		waves.append(wave)
 		wave_times.append(time)
@@ -52,4 +62,9 @@ func next_stage():
 
 
 func open_shop():
-	pass
+	game_state = GameState.Shop
+	$CanvasLayer/Shop.open_shop()
+
+
+func _on_shop_shop_closed():
+	next_stage()

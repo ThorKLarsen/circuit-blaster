@@ -7,33 +7,34 @@
 layout_mode = 3
 anchors_preset = 0
 offset_right = 288.0
-offset_bottom = 151.0
+offset_bottom = 193.0
 script = ExtResource("1_drshi")
-shop_panels = [NodePath("BoxContainer/ShopPanel"), NodePath("BoxContainer/ShopPanel2"), NodePath("BoxContainer/ShopPanel3")]
+shop_panels = [NodePath("MarginContainer/BoxContainer/ShopPanel"), NodePath("MarginContainer/BoxContainer/ShopPanel2"), NodePath("MarginContainer/BoxContainer/ShopPanel3")]
 
-[node name="BoxContainer" type="HBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -124.0
-offset_top = -60.0
-offset_right = 124.0
-offset_bottom = 60.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="BoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 alignment = 1
 
-[node name="ShopPanel" parent="BoxContainer" node_paths=PackedStringArray("shop") instance=ExtResource("2_obm17")]
+[node name="ShopPanel" parent="MarginContainer/BoxContainer" node_paths=PackedStringArray("shop") instance=ExtResource("2_obm17")]
 layout_mode = 2
-shop = NodePath("../..")
+shop = NodePath("../../..")
 
-[node name="ShopPanel2" parent="BoxContainer" node_paths=PackedStringArray("shop") instance=ExtResource("2_obm17")]
+[node name="ShopPanel2" parent="MarginContainer/BoxContainer" node_paths=PackedStringArray("shop") instance=ExtResource("2_obm17")]
 layout_mode = 2
-shop = NodePath("../..")
+shop = NodePath("../../..")
 
-[node name="ShopPanel3" parent="BoxContainer" node_paths=PackedStringArray("shop") instance=ExtResource("2_obm17")]
+[node name="ShopPanel3" parent="MarginContainer/BoxContainer" node_paths=PackedStringArray("shop") instance=ExtResource("2_obm17")]
 layout_mode = 2
-shop = NodePath("../..")
+shop = NodePath("../../..")

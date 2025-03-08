@@ -150,8 +150,7 @@ static func make_random_enemy_from_level(lvl: int):
 	regen = snapped(regen, 0.001)
 	var damage = 10 + randi_range(int(0.5 * per_level_damage(lvl)), int(1.5 * per_level_damage(lvl)))
 	var attack_speed = base_attack_speed
-	var attack_level = per_level_attack_level(lvl)
-	if randf() > 0.97: attack_level += 1
+	var attack_level = 1 + per_level_attack_level(lvl)
 	var speed = base_speed
 	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed)
 

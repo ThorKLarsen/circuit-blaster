@@ -10,4 +10,4 @@ const CIRCUIT_BLUE = Vector2i(12, 1)
 
 const PORT_CENTER = Vector2i(3, 6)
 const WIRES_H = Vector2i(2, 5)
-const WIRED_V = Vector2i(4, 5)
+const WIRES_V = Vector2i(4, 5)

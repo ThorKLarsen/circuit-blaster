@@ -22,6 +22,7 @@ class Port:
 		orientation = ori
 
 @export var port_layer: TileMapLayer
+@export var conn_layer: TileMapLayer
 @export var tool_tip: Control
 
 # Size of the smallest bounding box that can contain the circuit board
@@ -37,6 +38,7 @@ var grid: CircuitGrid
 var draggable: bool = true
 var is_dragged: bool = false
 var drag_origin: Vector2
+var drag_handle_offset: Vector2
 
 var atlas_texture_origin: Vector2i
 
@@ -64,12 +66,22 @@ func initialize(
 	
 	#for stat in stat_increases.get_stats().keys():
 	tool_tip.get_child(0).text += str(stat_increases)
+	
+	drag_handle_offset = Vector2(0, 0)
+	#for i in range(4):
+		#if Vector2i(i, 0) in shape:
+			#break
+		#else:
+			#drag_handle_offset += Vector2(Constants.TILE_SIZE, 0)
+
 
 func _process(delta):
 	if is_dragged:
 		global_position = lerp(
 			global_position, 
-			get_global_mouse_position() - Vector2(Constants.TILE_SIZE, Constants.TILE_SIZE)/2, 
+			get_global_mouse_position()
+			- Vector2(Constants.TILE_SIZE, Constants.TILE_SIZE)/2
+			- drag_handle_offset,
 			delta*20
 		)
 		set_tool_tip()
@@ -188,5 +200,8 @@ func circuit_clear():
 	clear()
 	port_layer.clear()
 
-func get_random_stat_increase(n: int):
-	pass
+func set_connection(location: Vector2i, orientation: Vector2i):
+	if orientation == Vector2i(1, 0):
+		conn_layer.set_cell(location, 0, TileNames.WIRES_H)
+	elif orientation == Vector2i(0, 1):
+		conn_layer.set_cell(location, 0, TileNames.WIRES_V)

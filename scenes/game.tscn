@@ -28,9 +28,9 @@ offset_right = 464.0
 
 [node name="Shop" parent="CanvasLayer" node_paths=PackedStringArray("dock") instance=ExtResource("4_ruvby")]
 offset_left = 176.0
-offset_top = 91.0
+offset_top = 69.0
 offset_right = 464.0
-offset_bottom = 242.0
+offset_bottom = 262.0
 dock = NodePath("../CircuitDock")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
@@ -67,4 +67,5 @@ script = ExtResource("8_ccom2")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PackedVector2Array(144, -100, 144, 400, 496, 400, 496, -100, 640, -100, 640, 500, 0, 500, 0, -100)
 
+[connection signal="shop_closed" from="CanvasLayer/Shop" to="." method="_on_shop_shop_closed"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

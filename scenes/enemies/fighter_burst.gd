@@ -29,8 +29,9 @@ func move(delta):
 
 func shoot():
 	var bullet_velocity = Vector2(0, 150)
+	var n_bullets = stat_block.attack_level
 	for i in range(3):
-		for j in range(3):
+		for j in range(n_bullets):
 			BulletHandler.spawn_bullet(
 				get_world_2d(),
 				BulletHandler.BulletTypes.ENEMY_BULLET,

@@ -54,6 +54,7 @@ offset_top = 224.0
 offset_right = 144.0
 offset_bottom = 336.0
 grid_size = Vector2i(7, 7)
+is_terminal = true
 locked_cells = Array[Vector2i]([Vector2i(3, 3)])
 
 [node name="InputLabel" type="Label" parent="."]

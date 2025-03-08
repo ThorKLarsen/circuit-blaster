@@ -1,8 +1,12 @@
-extends TextureRect
+extends Control
 
-var straight_coords = Vector2(224, 112)
-var burst_coords = Vector2(256, 112)
-var wide_coords = Vector2(224, 80)
+@export var straight_indicator: TextureRect
+@export var burst_indicator: TextureRect
+@export var wide_indicator: TextureRect
+
+var straight_coords = Vector2(256, 96)
+var burst_coords = Vector2(288, 96)
+var wide_coords = Vector2(224, 96)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,10 +16,17 @@ func _ready():
 func _process(delta):
 	pass
 
+func reset_attack_mode():
+	straight_indicator.texture.region.position.y = 128
+	burst_indicator.texture.region.position.y = 128
+	wide_indicator.texture.region.position.y = 128
+
 func _on_player_attack_mode_changed(mode):
+	reset_attack_mode()
 	if mode == 0:
-		texture.region.position = straight_coords
+		straight_indicator.texture.region.position.y = 96
 	if mode == 1:
-		texture.region.position = wide_coords
+		wide_indicator.texture.region.position.y = 96
 	if mode == 2:
-		texture.region.position = burst_coords
+		burst_indicator.texture.region.position.y = 96
+		

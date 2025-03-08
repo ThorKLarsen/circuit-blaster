@@ -20,11 +20,16 @@ shadow_size = 2
 shadow_offset = Vector2(-2, 2)
 anti_aliasing_size = 4.0
 
-[node name="Circuit" type="TileMapLayer" node_paths=PackedStringArray("port_layer", "tool_tip")]
+[node name="Circuit" type="TileMapLayer" node_paths=PackedStringArray("port_layer", "conn_layer", "tool_tip")]
 tile_set = ExtResource("1_2je4m")
 script = ExtResource("2_4jppl")
 port_layer = NodePath("Ports")
+conn_layer = NodePath("ConnectionLayer")
 tool_tip = NodePath("ToolTip")
+
+[node name="ConnectionLayer" type="TileMapLayer" parent="."]
+z_index = 1
+tile_set = ExtResource("1_2je4m")
 
 [node name="Ports" type="TileMapLayer" parent="."]
 tile_set = ExtResource("1_2je4m")

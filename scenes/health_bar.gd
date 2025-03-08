@@ -9,3 +9,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	value = (GameData.player.stat_block.health/GameData.player.stat_block.max_health) * max_value
+	if value > 0:
+		value = max(8, value)

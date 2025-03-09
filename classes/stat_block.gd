@@ -135,7 +135,7 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 	var max_stats = 4
 	var used_stats = []
 	
-	var weights = [10, 10, 10, 6, 2, 5]
+	var weights = [2, 10, 10, 10, 6, 5]
 	for i in range(n):
 		var stat
 		if used_stats.size() < max_stats:
@@ -148,11 +148,11 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 		
 		increase_level[Stats.find_key(stat)] += 1
 		match(stat):
+			Stats.ATTACK_LEVEL: attack_level += 1
 			Stats.HEALTH: health += per_level_health(lvl + 2)
 			Stats.REGEN: regen += per_level_regen(lvl + 2)
 			Stats.DAMAGE: damage += per_level_damage(lvl + 2) * 0.2
 			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl + 2)
-			Stats.ATTACK_LEVEL: attack_level += 1
 			Stats.SPEED: speed += 20
 	
 	if lvl <= 0:

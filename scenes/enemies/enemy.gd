@@ -61,7 +61,6 @@ func hit(value):
 	damage_timer.start(min(value, 50.)/100.)
 	#modulate = Color.CRIMSON
 	if stat_block.health <= 0:
-		print('dead')
 		kill()
 
 func kill(player_kill = true):

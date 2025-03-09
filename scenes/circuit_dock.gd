@@ -94,17 +94,19 @@ func get_random_shape():
 			r -= probabilities[i]
 	
 	# Generate shape
-	var res: Array[Vector2i] = [Vector2i(0, 0)]
-	var spaces = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+	var res: Array[Vector2i] = [Vector2i(0, 0)] # We start with a tile
+	var available_spaces = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 	for i in range(n-1):
 		# Pick a random tile from the space available
-		res.append(spaces.pick_random())
+		res.append(available_spaces.pick_random())
+		
 		# Add the spaces around the new tile
 		for v in Constants.NEIGHBORS:
-			if not (v + res[-1]) in spaces:
-				spaces.append(v + res[-1])
-		# Remove
-		spaces.erase(res[-1])
+			if !((v + res[-1]) in res): # Unless that space is already in the resulting shape
+				available_spaces.append(v + res[-1])
+				
+		# Remove the chosen space from the available list
+		available_spaces.erase(res[-1])
 
 	# Move shape
 	var offset = Vector2i(0, 0)
@@ -120,18 +122,28 @@ func get_random_shape():
 
 func get_random_ports(shape: Array[Vector2i]):
 	var n: int = shape.size()
+	# m is the number of ports to attempt to generate
 	var m: int = n / 2
 	
 	var ports: Array[Circuit.Port] = []
 	var orientations = [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]
 	for i in range(m):
-		var tile = shape.pick_random()
+		# Choose a random port location and orientation.
+		var loc = shape.pick_random()
+		var ori = orientations.pick_random()
+		
 		for p in ports:
-			if p.location == tile:
+			print(p.location, loc)
+			if p.location == loc:
+				print("thrown")
 				continue
+		
+		if loc + ori in shape:
+			continue
+		
 		var port = Circuit.Port.new(
-			tile,
-			orientations.pick_random()
+			loc,
+			ori,
 		)
 		ports.append(port)
 	return ports

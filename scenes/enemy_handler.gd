@@ -95,7 +95,6 @@ func spawn_enemy(spawn_resource: SpawnResource, randomize_position_in_lane = tru
 	get_tree().create_timer(spawn_resource.time_offest).timeout.connect(
 		get_parent().add_child.bind(enemy)
 	)
-	print("Spawning: ", enemy.name, " in ", spawn_resource.time_offest, " ", enemy.position)
 
 func make_enemy_resource(enemy: PackedScene, lane: int, time_offset: float):
 	var enemy_resource = SpawnResource.new()

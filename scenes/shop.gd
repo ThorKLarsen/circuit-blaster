@@ -31,7 +31,6 @@ func stock():
 	clear()
 	for sp in shop_panels:
 		sp.stock()
-		print(sp.grid.position, sp.grid.global_position, sp.grid)
 
 func clear():
 	for sp in shop_panels:

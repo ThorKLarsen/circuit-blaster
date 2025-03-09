@@ -7,6 +7,7 @@ enum AttackModes{
 }
 
 var BH = BulletHandler
+@export var game: Game
 @export var shoot_pattern_component: ShootPatternComponent
 @export var sprite: AnimatedSprite2D
 
@@ -36,7 +37,6 @@ func _physics_process(delta):
 		cur_speed = 50
 	if Input.is_action_just_pressed("focus"):
 		stat_block.attack_level += 1
-		print("att_lvl: ", stat_block.attack_level)
 		
 	
 	if Input.is_action_just_pressed("next_attack_mode"):
@@ -72,8 +72,9 @@ func _physics_process(delta):
 	move_and_slide()
 	#GameData.player_position = position
 	
-	if stat_block.health <= stat_block.max_health:
-		stat_block.health += stat_block.regen * delta
+	if game.game_state == game.GameState.Stage:
+		if stat_block.health <= stat_block.max_health:
+			stat_block.health += stat_block.regen * delta
 
 func set_animation(delta):
 	if sign(velocity.x) == 1:

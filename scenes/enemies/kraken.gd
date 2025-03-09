@@ -20,7 +20,7 @@ func _ready():
 	
 
 func move(delta):
-	print(attack_timer.time_left)
+
 	if state == State.SHOOTING:
 		timer += delta
 		if timer >= time_per_shot:

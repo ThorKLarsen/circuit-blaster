@@ -56,7 +56,6 @@ func next_stage():
 		
 		waves.append(wave)
 		wave_times.append(time)
-		print("Wave at: ", time)
 		get_tree().create_timer(time).timeout.connect(
 			enemy_spawner.spawm_wave.bind(wave)
 		)

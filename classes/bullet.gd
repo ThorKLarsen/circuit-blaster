@@ -114,10 +114,7 @@ func update(delta):
 	transform.origin = Vector2(position_x, position_y)
 	RenderingServer.canvas_item_set_transform(canvas_item_RID, transform)
 	PhysicsServer2D.area_set_transform(collision_area, transform)
-	#if transform.origin != temp1 + velocity *delta:
-		#print(transform.origin)
-		#print(temp1 + velocity *delta)
-		#print((temp1 + velocity *delta) - transform.origin)
+
 
 	lifetime -= delta
 	if lifetime <= 0:

@@ -15,7 +15,7 @@ class Port:
 	var location: Vector2i
 	# The direction of the adjecent tile which the port is pointing towards.
 	var orientation: Vector2i
-	var status: bool = false
+	#var status: bool = false
 	func _init(loc: Vector2i, ori: Vector2i):
 		assert(ori.length() == 1)
 		location = loc
@@ -24,6 +24,7 @@ class Port:
 @export var port_layer: TileMapLayer
 @export var conn_layer: TileMapLayer
 @export var tool_tip: Control
+@export var conn_indicator: Label
 
 # Size of the smallest bounding box that can contain the circuit board
 var size: Vector2i
@@ -114,6 +115,8 @@ func _input(event):
 
 func set_tool_tip():
 	var tool_tip_position = global_position + Vector2(-tool_tip.size.x - 32, +24)
+	if tool_tip_position.y + tool_tip.size.y > Constants.game_area_size.y:
+		tool_tip_position.y = Constants.game_area_size.y - tool_tip.size.y
 	#var x_max = get_viewport_rect().size.x - tool_tip.size.x
 	#if tool_tip_position.y <= 0:
 		#tool_tip_position.y = 0
@@ -122,6 +125,8 @@ func set_tool_tip():
 	##if tool_tip_position.y <= 0 and tool_tip_position.x >= x_max:
 		##tool_tip_position.x = global_position.x - tool_tip.size.x - 32
 	tool_tip.global_position = tool_tip_position
+	
+	conn_indicator.text = '!'.repeat(active_connections)
 
 func _start_drag(event):
 	dragging_started.emit()

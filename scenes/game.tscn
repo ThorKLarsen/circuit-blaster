@@ -36,8 +36,9 @@ dock = NodePath("../CircuitDock")
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("5_bqc86")
 
-[node name="Player" parent="." instance=ExtResource("1_76287")]
+[node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("1_76287")]
 position = Vector2(308, 317)
+game = NodePath("..")
 
 [node name="ScreenMarginLeft" type="StaticBody2D" parent="."]
 collision_layer = 3

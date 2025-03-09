@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3lnhpwi4m7wx"]
+[gd_scene load_steps=5 format=3 uid="uid://c3lnhpwi4m7wx"]
 
 [ext_resource type="TileSet" uid="uid://dvmpolf2lthil" path="res://new_tile_set.tres" id="1_2je4m"]
 [ext_resource type="Script" path="res://scenes/circuit.gd" id="2_4jppl"]
+[ext_resource type="LabelSettings" uid="uid://cd7bmmnagil3v" path="res://UI_text_settings.tres" id="3_psdvv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvwls"]
 content_margin_left = 4.0
@@ -20,12 +21,13 @@ shadow_size = 2
 shadow_offset = Vector2(-2, 2)
 anti_aliasing_size = 4.0
 
-[node name="Circuit" type="TileMapLayer" node_paths=PackedStringArray("port_layer", "conn_layer", "tool_tip")]
+[node name="Circuit" type="TileMapLayer" node_paths=PackedStringArray("port_layer", "conn_layer", "tool_tip", "conn_indicator")]
 tile_set = ExtResource("1_2je4m")
 script = ExtResource("2_4jppl")
 port_layer = NodePath("Ports")
 conn_layer = NodePath("ConnectionLayer")
 tool_tip = NodePath("ToolTip")
+conn_indicator = NodePath("ToolTip/ConnectionIndicator")
 
 [node name="ConnectionLayer" type="TileMapLayer" parent="."]
 z_index = 1
@@ -46,3 +48,10 @@ layout_mode = 2
 bbcode_enabled = true
 text = "[font_size=8][font=res://fonts/PublicPixel.ttf]"
 fit_content = true
+
+[node name="ConnectionIndicator" type="Label" parent="ToolTip"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "!!"
+label_settings = ExtResource("3_psdvv")
+horizontal_alignment = 2

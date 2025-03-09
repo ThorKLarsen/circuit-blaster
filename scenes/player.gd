@@ -121,13 +121,13 @@ func update_stats(circuits: Array[Circuit]):
 	stat_block = StatBlock.make_base_player()
 	stat_block.health = min(cur_health, stat_block.max_health)
 	for c in circuits:
-		stat_block.add(c.stat_increases)
+		stat_block.add(c.stat_increases, c.active_connections + 1)
 
-
-func get_damage():
+func get_damage() -> float:
 	if attack_mode == AttackModes.Straight:
 		return stat_block.damage
 	elif attack_mode == AttackModes.Wide:
-		return stat_block.damage*0.8
+		return stat_block.damage*0.7
 	elif attack_mode == AttackModes.Burst:
 		return stat_block.damage*1.5
+	return 0

@@ -32,7 +32,9 @@ func _process(delta):
 		_stage_timer -= delta
 	# When the stage is over, we 
 	if _stage_timer <= 0:
-		if game_state != GameState.Shop:
+		if get_tree().get_nodes_in_group("enemy").size() != 0:
+			_stage_timer += 1
+		elif game_state != GameState.Shop:
 			open_shop()
 
 

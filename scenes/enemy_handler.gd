@@ -111,3 +111,13 @@ func get_threat(stage: int = GameData.stage):
 	var threat = 5 + 3 * stage + round(0.2 * stage**1.3)
 	threat *= randfn(1, 0.2)
 	return threat
+
+
+static func popcorn_cloud_wave(threat: float):
+	pass
+
+static func popcorn_lane_wave(threat: float):
+	pass
+
+static func popcorn_flow_wave(threat: float):
+	pass

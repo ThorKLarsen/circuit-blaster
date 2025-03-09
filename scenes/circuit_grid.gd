@@ -103,28 +103,34 @@ func add_circuit(circuit: Circuit, coords: Vector2i):
 	update_port_connections()
 
 func update_port_connections():
-	# We only connect ports in the terminal
-	if !is_terminal:
-		return
-		
-	print("Checking port connections")
 	
+	
+	for c:Circuit in circuits.values():
+		c.active_connections = 0
+
+	# Check port connections
 	for c1_pos in circuits.keys():
 		var c1:Circuit = circuits[c1_pos]
+		# Loop over each port
 		for port:Circuit.Port in c1.ports:
+			# We only consider ports facing in positive directions, since every connection will have one of each.
 			if port.orientation in [Vector2i(0, 1), Vector2i(1, 0)]:
-				c1.conn_layer.erase_cell(port.location)
+				c1.erase_connection(port.location)
+				# If the grid isn't the terminal, we don't attempt to make connections
+				if !is_terminal:
+					continue
+				#Loop over other circuits
 				for c2_pos in circuits.keys():
 					var c2:Circuit = circuits[c2_pos]
 					if c1 == c2:
 						continue
 					for target_port in c2.ports:
-						print(c1_pos, port.location, port.orientation)
-						print(c2_pos, target_port.location, target_port.orientation)
+						#Check that target_port is in the correct position and orientation. 
 						if target_port.location + c2_pos == port.location + c1_pos + port.orientation\
 						and target_port.orientation == -1 * port.orientation:
-							print("Yes ******************")
 							c1.set_connection(port.location, port.orientation)
+							c2.set_connection(target_port.location, target_port.orientation)
+	
 
 
 # Removes a circuit from grid. Does not free the circuit nor unparent it
@@ -132,6 +138,7 @@ func remove_circuit(circuit: Circuit):
 	# Remove circuit from dict
 	circuits.erase(circuits.find_key(circuit))
 	update_port_connections()
+	
 
 func empty():
 	for c in circuits.values():

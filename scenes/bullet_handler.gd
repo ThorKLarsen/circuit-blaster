@@ -22,7 +22,8 @@ func _physics_process(delta):
 func update_bullets(delta):
 	#var bullets_to_kill = []
 	for b in bullets:
-		b.update(delta)
+		if !b.update(delta): # Returns false if the bullet needs to be deleted
+			kill_bullet.call_deferred(b)
 		if bullet_is_out_of_bounds(b):
 			kill_bullet.call_deferred(b)
 			
@@ -36,7 +37,8 @@ func spawn_bullet(
 	texture: Texture2D,
 	atlas_region: Rect2i = Rect2i(0, 0, 0, 0),
 	collision_rect: Rect2i = Rect2(0, 0, 4, 10),
-	rotates: bool = true
+	rotates: bool = true,
+	lifetime: float = 20,
 ):
 	var bullet = Bullet.new(
 		pos, 
@@ -48,7 +50,8 @@ func spawn_bullet(
 		get_canvas_item(), 
 		world_2d.space, 
 		atlas_region,
-		rotates
+		rotates,
+		lifetime
 	)
 	if type == BulletTypes.PLAYER_BULLET:
 		bullets.append(bullet)

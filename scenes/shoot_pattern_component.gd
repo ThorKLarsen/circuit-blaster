@@ -47,28 +47,31 @@ func shoot_straight(attack_level: int):
 				_shoot_from_agent(Vector2(-i*5 - 32, i*4), Vector2(0, -bullet_speed))
 
 func shoot_wide(attack_level: int):
+	var lifetime = 0.35
 	var even = attack_level % 2
 	var i = 1
 	var angle = 0.15 - attack_level * 0.005
 	if attack_level % 2 == 1:
-		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(angle/2.))
-		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(-angle/2.))
+		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(angle/2.), lifetime)
+		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(-angle/2.), lifetime)
 		attack_level -= 1
 	else:
-		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed))
-		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(angle))
-		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(-angle))
+		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed), lifetime)
+		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(angle), lifetime)
+		_shoot_from_agent(Vector2(0, 0), Vector2(0, -bullet_speed).rotated(-angle), lifetime)
 		attack_level -= 2
 		i += 1
 	
 	while attack_level > 0:
 		_shoot_from_agent(
 			Vector2(0, 0), 
-			Vector2(0, -bullet_speed).rotated(angle/2. * int(even) + angle * i)
+			Vector2(0, -bullet_speed).rotated(angle/2. * int(even) + angle * i),
+			lifetime
 		)
 		_shoot_from_agent(
 			Vector2(0, 0),
-			Vector2(0, -bullet_speed).rotated(-angle/2. * int(even) + -angle * i)
+			Vector2(0, -bullet_speed).rotated(-angle/2. * int(even) + -angle * i),
+			lifetime
 		)
 		attack_level -= 2
 		i += 1                 
@@ -105,7 +108,7 @@ func _shoot(position: Vector2, velocity: Vector2):
 		Rect2i(16, 0, 16, 16)
 	)
 
-func _shoot_from_agent(offset: Vector2, velocity: Vector2):
+func _shoot_from_agent(offset: Vector2, velocity: Vector2, lifetime = 20):
 	BulletHandler.spawn_bullet(
 		agent.get_world_2d(),
 		BulletHandler.BulletTypes.PLAYER_BULLET,
@@ -113,7 +116,10 @@ func _shoot_from_agent(offset: Vector2, velocity: Vector2):
 		velocity,
 		agent.get_damage(),
 		load("res://assets/CB_spritesheet.png"),
-		Rect2i(16, 0, 16, 16)
+		Rect2i(16, 0, 16, 16),
+		Rect2(0, 0, 4, 10),
+		true,
+		lifetime,
 	)
 
 

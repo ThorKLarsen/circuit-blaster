@@ -95,6 +95,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("shoot_pattern_component", "sprite") groups=["player"]]
+z_index = 2
 collision_mask = 6
 motion_mode = 1
 script = ExtResource("1_arfuo")

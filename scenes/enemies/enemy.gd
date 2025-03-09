@@ -9,7 +9,7 @@ var outer_rect: Rect2
 
 # = Stats =
 @export_category("Stat modifiers")
-@export var health_mod: float = 0.4
+@export var health_mod: float = 1.
 @export var regen_mod: float = 0.
 @export var damage_mod: float = 1.
 @export var attack_speed_mod: float = 0.7

@@ -9,6 +9,7 @@ var position:
 	get(): return Vector2(position_x, position_y)
 var damage: float
 var velocity: Vector2
+var lifetime: float
 var transform: Transform2D
 var angle: float
 var sprite_rect: Rect2
@@ -32,13 +33,15 @@ func _init(
 	parent_ci: RID,
 	physics_space: RID,
 	atlas_region: Rect2i = Rect2i(0, 0, 0, 0),
-	rotates: bool = true
+	rotates: bool = true,
+	lifetime: float = 20,
 ):
 	# Define variable
 	self.position_x = position.x
 	self.position_y = position.y
 	self.damage = damage
 	self.velocity = velocity
+	self.lifetime = lifetime
 	self.canvas_item_RID = RenderingServer.canvas_item_create()
 	if rotates:
 		self.angle = velocity.angle()+PI/2
@@ -115,6 +118,12 @@ func update(delta):
 		#print(transform.origin)
 		#print(temp1 + velocity *delta)
 		#print((temp1 + velocity *delta) - transform.origin)
+
+	lifetime -= delta
+	if lifetime <= 0:
+		return false
+	else:
+		return true
 
 func monitor_callback(
 	body_area_status: int,

@@ -35,6 +35,8 @@ var stat_increases: StatBlock
 #var stat_increases: Array = [10, 0, 0, 0, 0,] # Dmg, attspd, hp, regen, speed
 var grid: CircuitGrid
 
+var active_connections: int = 0
+
 var draggable: bool = true
 var is_dragged: bool = false
 var drag_origin: Vector2
@@ -205,3 +207,9 @@ func set_connection(location: Vector2i, orientation: Vector2i):
 		conn_layer.set_cell(location, 0, TileNames.WIRES_H)
 	elif orientation == Vector2i(0, 1):
 		conn_layer.set_cell(location, 0, TileNames.WIRES_V)
+	
+	active_connections += 1
+
+
+func erase_connection(location: Vector2i):
+	conn_layer.erase_cell(location)

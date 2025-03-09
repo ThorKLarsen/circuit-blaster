@@ -1,11 +1,11 @@
 class_name StatBlock extends Object
 
 enum Stats{
+	ATTACK_LEVEL,
 	HEALTH,
 	REGEN,
 	DAMAGE,
 	ATTACK_SPEED,
-	ATTACK_LEVEL,
 	SPEED
 }
 
@@ -72,14 +72,14 @@ func _init(
 
 # Adds two statblocks together.
 # Health stat is not symmetic! A.add(B) had the current health of block A
-func add(stat_block: StatBlock):
-	max_health += stat_block.max_health
+func add(stat_block: StatBlock, mult: float = 1):
+	max_health += stat_block.max_health * round(mult)
 	health = health
-	regen += stat_block.regen
-	damage += stat_block.damage
-	attack_speed += stat_block.attack_speed
+	regen += stat_block.regen * mult
+	damage += stat_block.damage * mult
+	attack_speed += stat_block.attack_speed * mult
 	attack_level += stat_block.attack_level
-	speed += stat_block.speed
+	speed += stat_block.speed * mult
 	return self
 
 func _to_string():
@@ -127,12 +127,25 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 	# The number of rolls (each roll can hit a different stat or the same)
 	var n = 1
 	for i in range(size-1):
-		if randf() > 0.4:
+		if randf() > 0.6:
 			n += 1
+	if size >= 5:
+		n += 1 + lvl/5
 	
-	var weights = [10, 5, 10, 8, 2, 7]
+	var max_stats = 4
+	var used_stats = []
+	
+	var weights = [10, 10, 10, 6, 2, 5]
 	for i in range(n):
-		var stat = Global.rand_weighted(Stats.values(), weights)
+		var stat
+		if used_stats.size() < max_stats:
+			stat = Global.rand_weighted(Stats.values(), weights)
+			if !stat in used_stats:
+				used_stats.append(stat)
+		else:
+			stat = used_stats.pick_random()
+		
+		
 		increase_level[Stats.find_key(stat)] += 1
 		match(stat):
 			Stats.HEALTH: health += per_level_health(lvl + 2)
@@ -141,18 +154,30 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl + 2)
 			Stats.ATTACK_LEVEL: attack_level += 1
 			Stats.SPEED: speed += 20
+	
+	if lvl <= 0:
+		lvl = 0
+		if attack_level == 0:
+			increase_level[Stats.find_key(Stats.ATTACK_LEVEL)] += 1
+			attack_level += 1
 
 	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed, increase_level)
 
 static func make_random_enemy_from_level(lvl: int):
-	var health = 60. + randf_range(0.5, 1.5) * (lvl * 5)
-	var regen = 1. + 0.5 * lvl
-	regen = snapped(regen, 0.001)
-	var damage = 10 + randi_range(int(0.5 * per_level_damage(lvl)), int(1.5 * per_level_damage(lvl)))
-	var attack_speed = base_attack_speed
+	var health = enemy_health(lvl)
+	var regen = 1.
+	var damage = enemy_damage(lvl)
+	var attack_speed = 0.7
+	if GameData.world >= 3: attack_speed += (GameData.world-2) * 0.3
 	var attack_level = 1 + per_level_attack_level(lvl)
 	var speed = base_speed
 	return StatBlock.new(lvl, health, regen, damage, attack_speed, attack_level, speed)
+
+static func enemy_health(stage: int):
+	return 5. + stage * 5 + 10 * ((stage/5)*((stage/5) + 1))/2
+
+static func enemy_damage(stage: int):
+	return 5 + stage + (stage/5) * 5
 
 static func make_base_player():
 	var health = 70

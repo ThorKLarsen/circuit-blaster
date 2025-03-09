@@ -8,7 +8,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if GameData.stage == -1:
-		text = "READY!"
-	else:
-		text = "Stage: " + str(1 + GameData.stage/5) + "-" + str(GameData.stage%5 + 1)
+	text = str(snapped(GameData.player.get_damage(), 0.05))

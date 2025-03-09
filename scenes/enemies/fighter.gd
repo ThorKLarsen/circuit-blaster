@@ -32,8 +32,12 @@ func shoot():
 		+ Vector2(1, 0)*randfn(0, 8)
 	)
 	
-	if bullet_velocity.angle() < PI/4 or bullet_velocity.angle() > 3*PI/4:
-		return
+	if stat_block.attack_level <= 1:
+		if bullet_velocity.angle() < PI/4 or bullet_velocity.angle() > 3*PI/4:
+			return
+	elif stat_block.attack_level <= 3:
+		if bullet_velocity.angle() < 0 or bullet_velocity.angle() > PI:
+			return
 	
 	BulletHandler.spawn_bullet(
 		get_world_2d(),

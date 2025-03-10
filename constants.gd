@@ -26,7 +26,7 @@ var VIRUS = load("res://scenes/enemies/virus_enemy.tscn")
 var SNAKE = load("res://scenes/enemies/snake_head.tscn")
 var KRAKEN = load("res://scenes/enemies/kraken.tscn")
 var FIGHTER_LARGE = load("res://scenes/enemies/fighter_large.tscn")
-
+var SPIDER_ELITE = load("res://scenes/enemies/spider_elite.tscn")
 
 func _ready():
 	game_area_size = get_viewport().get_visible_rect().size

@@ -9,7 +9,7 @@ enum GameState{
 @export var enemy_spawner: EnemySpawner
 
 var game_state = GameState.Stage
-var stage_time: float = 60.0
+var stage_time: float = 45.0
 var _stage_timer = 0
 var waves_per_stage = 4
 
@@ -47,7 +47,7 @@ func next_stage():
 	_stage_timer = stage_time
 	GameData.stage += 1
 	for i in range(waves_per_stage):
-		var wave = enemy_spawner.wave_create(GameData.stage)
+		var wave = enemy_spawner.wave_create(GameData.stage, GameData.world)
 		var time = randfn(
 			i * stage_time/(waves_per_stage) + stage_time/(waves_per_stage*2),
 			sqrt(stage_time/waves_per_stage)

@@ -10,7 +10,7 @@ class_name CircuitGrid extends GridContainer
 @export var locked_cells: Array[Vector2i] = []
 
 var grid_panels: Dictionary = {} # Vector2i : Control
-var circuits: Dictionary = {} # Vector2i : Circuit
+var circuits: Array[Circuit] = []
 
 var mouse_cell_coords: Vector2i = Vector2i(-1, -1) # Vector2i( -1, -1) means mouse is ouside grid
 
@@ -76,8 +76,8 @@ func circuit_can_be_placed_at(circuit: Circuit, coords: Vector2i):
 			return false
 	
 	# Check is circuit overlaps already existing circuits
-	for stored_circuit_coords in circuits.keys():
-		var stored_circuit = circuits[stored_circuit_coords]
+	for stored_circuit in circuits:
+		var stored_circuit_coords = stored_circuit.grid_position
 		if stored_circuit == circuit:
 			continue
 		for vec in stored_circuit.shape:
@@ -98,19 +98,20 @@ func add_circuit(circuit: Circuit, coords: Vector2i):
 		return true
 
 	# Add circuit to dictionary
-	circuits[coords] = circuit
+	circuits.append(circuit)
+	circuit.grid_position = coords
 	
 	update_port_connections()
 
 func update_port_connections():
 	
 	
-	for c:Circuit in circuits.values():
+	for c:Circuit in circuits:
 		c.active_connections = 0
 
 	# Check port connections
-	for c1_pos in circuits.keys():
-		var c1:Circuit = circuits[c1_pos]
+	for c1 in circuits:
+		var c1_pos:Vector2i = c1.grid_position
 		# Loop over each port
 		for port:Circuit.Port in c1.ports:
 			# We only consider ports facing in positive directions, since every connection will have one of each.
@@ -120,8 +121,8 @@ func update_port_connections():
 				if !is_terminal:
 					continue
 				#Loop over other circuits
-				for c2_pos in circuits.keys():
-					var c2:Circuit = circuits[c2_pos]
+				for c2 in circuits:
+					var c2_pos: Vector2i = c2.grid_position
 					if c1 == c2:
 						continue
 					for target_port in c2.ports:
@@ -136,17 +137,17 @@ func update_port_connections():
 # Removes a circuit from grid. Does not free the circuit nor unparent it
 func remove_circuit(circuit: Circuit):
 	# Remove circuit from dict
-	circuits.erase(circuits.find_key(circuit))
+	circuits.erase(circuit)
 	update_port_connections()
 	
 
 func empty():
-	for c in circuits.values():
+	for c in circuits:
 		remove_circuit(c)
 
 
 func clear():
-	for c in circuits.values():
+	for c in circuits:
 		remove_circuit(c)
 		c.queue_free.call_deferred()
 

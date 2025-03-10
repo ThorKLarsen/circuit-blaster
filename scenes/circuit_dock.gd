@@ -50,7 +50,7 @@ func place_circuit(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
 	
 	# If placed in the terminal, we update player stats.
 	var circuits: Array[Circuit]
-	for c in terminal.circuits.values():
+	for c in terminal.circuits:
 		circuits.append(c)
 	GameData.player.update_stats(circuits)
 
@@ -81,17 +81,8 @@ func add_random_circuit(grid = input):
 
 
 func get_random_shape():
-	var probabilities = [0.03, 0.1, 0.12, 0.35, 0.25, 0.1, 0.05]
-	var r = randf()
-	var n = 0
-	
-	# Generate n
-	for i in range(probabilities.size()):
-		n += 1
-		if r <= probabilities[i]:
-			break
-		else:
-			r -= probabilities[i]
+	var probabilities = [0.03, 0.15, 0.2, 0.3, 0.25, 0.1, 0.05]
+	var n = Global.rand_weighted(range(7), probabilities) +1 
 	
 	# Generate shape
 	var res: Array[Vector2i] = [Vector2i(0, 0)] # We start with a tile
@@ -132,11 +123,13 @@ func get_random_ports(shape: Array[Vector2i]):
 		var loc = shape.pick_random()
 		var ori = orientations.pick_random()
 		
+		# Check that the port configuration is valid
 		for p in ports:
-			print(p.location, loc)
 			if p.location == loc:
-				print("thrown")
-				continue
+				loc = null
+				break
+		if loc == null:
+			continue
 		
 		if loc + ori in shape:
 			continue

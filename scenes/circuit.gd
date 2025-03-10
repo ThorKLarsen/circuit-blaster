@@ -36,6 +36,8 @@ var stat_increases: StatBlock
 #var stat_increases: Array = [10, 0, 0, 0, 0,] # Dmg, attspd, hp, regen, speed
 var grid: CircuitGrid
 
+var grid_position: Vector2i
+
 var active_connections: int = 0
 
 var draggable: bool = true

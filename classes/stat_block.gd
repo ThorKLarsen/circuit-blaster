@@ -130,7 +130,7 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 		if randf() > 0.6:
 			n += 1
 	if size >= 5:
-		n += 1 + lvl/5
+		n += min(1 + lvl/5, 2)
 	
 	var max_stats = 4
 	var used_stats = []
@@ -177,7 +177,7 @@ static func enemy_health(stage: int):
 	return 5. + stage * 5 + 10 * ((stage/5)*((stage/5) + 1))/2
 
 static func enemy_damage(stage: int):
-	return 5 + stage + (stage/5) * 5
+	return 5 + 2*stage + (stage/5) * 10
 
 static func make_base_player():
 	var health = 70

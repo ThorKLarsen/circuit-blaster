@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://ked11sr8f1vi"]
+[gd_scene load_steps=12 format=3 uid="uid://ked11sr8f1vi"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_3nhuv"]
 [ext_resource type="PackedScene" uid="uid://clxyr76pfij52" path="res://scenes/player.tscn" id="1_76287"]
+[ext_resource type="PackedScene" uid="uid://cjrgc8dltiw7b" path="res://scenes/parallax_background.tscn" id="2_ifq3a"]
 [ext_resource type="PackedScene" uid="uid://cgd3cv33mivf6" path="res://scenes/ui_dock.tscn" id="3_sjijk"]
 [ext_resource type="PackedScene" uid="uid://2l2itfgqn56e" path="res://scenes/circuit_dock.tscn" id="4_h70ld"]
 [ext_resource type="PackedScene" uid="uid://dkl1ckydk3go3" path="res://scenes/shop.tscn" id="4_ruvby"]
@@ -11,12 +12,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ef26n"]
 size = Vector2(176, 360)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m03p6"]
+size = Vector2(648, 120)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xjkqb"]
 size = Vector2(640, 100)
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("enemy_spawner")]
 script = ExtResource("1_3nhuv")
 enemy_spawner = NodePath("EnemySpawner")
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("2_ifq3a")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -46,6 +52,13 @@ collision_layer = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenMarginLeft"]
 position = Vector2(88, 180)
 shape = SubResource("RectangleShape2D_ef26n")
+
+[node name="ScreenMarginLeft3" type="StaticBody2D" parent="."]
+collision_layer = 3
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ScreenMarginLeft3"]
+position = Vector2(316, -60)
+shape = SubResource("RectangleShape2D_m03p6")
 
 [node name="ScreenMarginLeft2" type="StaticBody2D" parent="."]
 position = Vector2(320, 410)

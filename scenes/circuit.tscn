@@ -38,6 +38,7 @@ tile_set = ExtResource("1_2je4m")
 
 [node name="ToolTip" type="PanelContainer" parent="."]
 modulate = Color(1, 1, 1, 0.701961)
+z_index = 10
 offset_right = 131.0
 offset_bottom = 50.0
 mouse_filter = 2

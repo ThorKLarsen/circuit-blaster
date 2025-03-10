@@ -121,7 +121,7 @@ func get_lane_center(lane: int):
 	return Vector2(Constants.left_margin + (lane+0.5)*lane_width, 0)
 
 static func get_threat(stage: int = GameData.stage) -> float:
-	var threat = 5 + 3 * stage + round(0.2 * stage**1.3)
+	var threat = 10 + stage + (stage/5) * 5
 	threat *= randfn(1, 0.2)
 	return threat
 
@@ -129,10 +129,7 @@ static func get_threat(stage: int = GameData.stage) -> float:
 func popcorn_cloud_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
 	var threat: float = get_threat(stage)
-	var enemies = [
-		Constants.FIGHTER,
-		Constants.FIGHTER_BURST,
-	]
+	var enemies = small_enemies
 	var enemy_weights = [10, world]
 	
 	for i in range(round(threat)):
@@ -154,10 +151,7 @@ func popcorn_cloud_wave(stage:int, world: int) -> Array[SpawnResource]:
 func popcorn_lane_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
 	var threat: float = get_threat(stage)
-	var enemies = [
-		Constants.FIGHTER,
-		Constants.FIGHTER_BURST,
-	]
+	var enemies = small_enemies
 	var enemy_weights = [10, world]
 	
 	var lanes = []
@@ -177,10 +171,7 @@ func popcorn_lane_wave(stage:int, world: int) -> Array[SpawnResource]:
 func popcorn_flow_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
 	var threat: float = get_threat(stage)
-	var enemies = [
-		Constants.FIGHTER,
-		Constants.FIGHTER_BURST,
-	]
+	var enemies = small_enemies
 	var enemy_weights = [10, world]
 	
 	for i in range(round(threat)):

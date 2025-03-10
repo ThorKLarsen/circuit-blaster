@@ -20,16 +20,16 @@ func _process(delta):
 
 func stock():
 	dock.add_random_circuit(grid)
-	var circuit = grid.circuits.values()[0]
+	var circuit = grid.circuits[0]
 	desc_label.text = circuit.tool_tip.get_child(0).text
 
 func clear():
 	grid.clear()
 
 func buy():
-	if grid.circuits.values().size() <= 0:
+	if grid.circuits.size() <= 0:
 		return false
-	var circuit = grid.circuits.values()[0]
+	var circuit = grid.circuits[0]
 	grid.empty()
 	dock.send_circuit_to_input(circuit)
 	item_bought.emit(circuit)

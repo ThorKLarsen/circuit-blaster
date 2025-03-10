@@ -2,7 +2,7 @@ extends Enemy
 
 
 var stall_timer = 1.5
-var stall_position = 45
+var stall_position = 45 + randfn(0, 10)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,6 +13,10 @@ func move(delta):
 	if position.y <= stall_position:
 		velocity.y = 2*stat_block.speed
 	elif stall_timer >= 0:
+		if stall_timer == 1.5:
+			shoot()
+			attack_timer.stop()
+			attack_timer.start()
 		velocity.y = 0
 		stall_timer -= delta
 	else:

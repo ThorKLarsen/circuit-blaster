@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjrgc8dltiw7b"]
+
+[ext_resource type="Texture2D" uid="uid://8au03wd81oj8" path="res://assets/space.png" id="1_iw5q7"]
+[ext_resource type="Texture2D" uid="uid://ddus365ikqlmb" path="res://assets/space_paralax.png" id="2_uooyy"]
+
+[node name="ParallaxBackground" type="Node2D"]
+z_index = -1
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(0, 2048)
+autoscroll = Vector2(0, 60)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_iw5q7")
+
+[node name="Parallax2D2" type="Parallax2D" parent="."]
+repeat_size = Vector2(0, 2048)
+autoscroll = Vector2(0, 75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2"]
+texture = ExtResource("2_uooyy")

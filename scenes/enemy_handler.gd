@@ -41,14 +41,50 @@ func _ready():
 func _process(delta):
 	pass
 
-func wave_create(stage: int, world: int) -> Array[SpawnResource]:
+func wave_create(stage: int, world: int, wave_n: int) -> Array[SpawnResource]:
+	var wave: Array[SpawnResource] = []
+	if world <= 1:
+		var wave_generators = [
+			popcorn_cloud_wave,
+			popcorn_flow_wave,
+			popcorn_lane_wave
+		]
+		
+		wave = wave_generators.pick_random().call(stage, world)
 	
-	var wave_generators = [
-		popcorn_cloud_wave,
-		popcorn_flow_wave,
-		popcorn_lane_wave
-	]
-	var wave: Array[SpawnResource] = wave_generators.pick_random().call(stage, world)
+	else:
+		if stage%5 == 4 and wave_n == 0:
+			wave = elite_wave(stage, world)
+			if world >= 3:
+				var wave_generators = [
+					popcorn_cloud_wave,
+					popcorn_flow_wave,
+					popcorn_lane_wave
+				]
+				
+				for sr in wave_generators.pick_random().call(stage, world):
+					wave.append(sr)
+		else:
+			if randf() > 0.5:
+				var wave_generators = [
+					popcorn_cloud_wave,
+					popcorn_flow_wave,
+					popcorn_lane_wave
+				]
+				
+				wave = wave_generators.pick_random().call(stage, world)
+			else:
+				var wave_generators = [
+					popcorn_cloud_wave,
+					popcorn_flow_wave,
+					popcorn_lane_wave
+				]
+				
+				wave = wave_generators.pick_random().call(stage-5, world-1)
+				
+				for sr in medium_fighter_wave(stage, world):
+					wave.append(sr)
+
 	return wave
 
 func wave_create_old(stage: int) -> Array[SpawnResource]:
@@ -172,7 +208,7 @@ func popcorn_flow_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
 	var threat: float = get_threat(stage)
 	var enemies = small_enemies
-	var enemy_weights = [10, world]
+	var enemy_weights = [10, min(world, 3)]
 	
 	for i in range(round(threat)):
 		var scene = Global.rand_weighted(enemies, enemy_weights)
@@ -187,17 +223,40 @@ func popcorn_flow_wave(stage:int, world: int) -> Array[SpawnResource]:
 	
 	return wave
 
-func medium_cloud_wave(stage:int, world: int) -> Array[SpawnResource]:
+func medium_fighter_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
+	var enemies = [Constants.FIGHTER_LARGE, Constants.FIGHTER_LARGE_2]
+	var enemy_weights = [1, 1]
 	
-	return wave
-
-func medium_dual_wave(stage:int, world: int) -> Array[SpawnResource]:
-	var wave: Array[SpawnResource] = []
+	var lanes = []
+	for i in range(3):
+		lanes.append(range(spawn_lanes).pick_random())
+	
+	var n: int = world
+	for i in range(n):
+		var scene = Global.rand_weighted(enemies, enemy_weights)
+		var lane = range(spawn_lanes).pick_random()
+		var time_offset = (i/n) * wave_time
+		wave.append(
+			make_enemy_resource(scene, lane, time_offset)
+		)
 	
 	return wave
 
 func elite_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
+	var enemies = [Constants.SPIDER_ELITE]
+	var enemy_weights = [1]
+	
+	var lanes = []
+	for i in range(3):
+		lanes.append(range(spawn_lanes).pick_random())
+	
+	var scene = Global.rand_weighted(enemies, enemy_weights)
+	var lane = 2
+	var time_offset = 0
+	wave.append(
+		make_enemy_resource(scene, lane, time_offset)
+	)
 	
 	return wave

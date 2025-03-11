@@ -7,6 +7,8 @@ class_name Enemy extends CharacterBody2D
 var stat_block: StatBlock
 var outer_rect: Rect2
 
+var is_dead: bool = false
+
 # = Stats =
 @export_category("Stat modifiers")
 @export var health_mod: float = 1.
@@ -64,6 +66,7 @@ func hit(value):
 		kill()
 
 func kill(player_kill = true):
+	is_dead = true
 	stat_block.free.call_deferred()
 	queue_free()
 	

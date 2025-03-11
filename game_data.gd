@@ -13,7 +13,11 @@ var stage_duration:
 var wave_times:
 	get(): return game.wave_times
 
-var stage: int = -1
+var stage: int = -1:
+	set(value):
+		stage = value
+		if value%5 == 0:
+			SignalBus.world_advanced.emit(world)
 var world: int:
 	get():
 		return 1 + stage/5

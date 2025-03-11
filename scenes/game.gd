@@ -47,7 +47,7 @@ func next_stage():
 	_stage_timer = stage_time
 	GameData.stage += 1
 	for i in range(waves_per_stage):
-		var wave = enemy_spawner.wave_create(GameData.stage, GameData.world)
+		var wave = enemy_spawner.wave_create(GameData.stage, GameData.world, i)
 		var time = randfn(
 			i * stage_time/(waves_per_stage) + stage_time/(waves_per_stage*2),
 			sqrt(stage_time/waves_per_stage)

@@ -6,7 +6,7 @@
 
 [node name="Enemy" instance=ExtResource("1_pbxij")]
 script = ExtResource("2_qll24")
-health_mod = 35.0
+health_mod = 100.0
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_exs3x")

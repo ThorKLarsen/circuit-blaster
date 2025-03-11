@@ -27,6 +27,7 @@ var SNAKE = load("res://scenes/enemies/snake_head.tscn")
 var KRAKEN = load("res://scenes/enemies/kraken.tscn")
 var FIGHTER_LARGE = load("res://scenes/enemies/fighter_large.tscn")
 var SPIDER_ELITE = load("res://scenes/enemies/spider_elite.tscn")
+var FIGHTER_LARGE_2 = load("res://scenes/enemies/fighter_large_2.tscn")
 
 func _ready():
 	game_area_size = get_viewport().get_visible_rect().size

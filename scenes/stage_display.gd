@@ -11,4 +11,4 @@ func _process(delta):
 	if GameData.stage == -1:
 		text = "READY!"
 	else:
-		text = "Stage: " + str(1 + GameData.stage/5) + "-" + str(GameData.stage%5 + 1)
+		text = "Stage: " + str(GameData.world) + "-" + str(GameData.stage%5 + 1)

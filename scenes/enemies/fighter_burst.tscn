@@ -11,7 +11,7 @@ region = Rect2(48, 128, 16, 16)
 [node name="BurstFighter" instance=ExtResource("1_edm4b")]
 script = ExtResource("2_v1axc")
 damage_mod = 1.5
-attack_speed_mod = 0.5
+attack_speed_mod = 0.3
 speed_mod = 0.6
 
 [node name="Sprite2D" parent="." index="0"]

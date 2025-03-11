@@ -25,6 +25,7 @@ func _ready():
 	sprite.frame = 3
 	
 	stat_block = StatBlock.make_base_player()
+	SignalBus.world_advanced.connect(heal.unbind(1))
 
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
@@ -120,9 +121,9 @@ func hit(value):
 func update_stats(circuits: Array[Circuit]):
 	var cur_health = stat_block.health
 	stat_block = StatBlock.make_base_player()
-	stat_block.health = min(cur_health, stat_block.max_health)
 	for c in circuits:
 		stat_block.add(c.stat_increases, c.active_connections + 1)
+	stat_block.health = min(cur_health, stat_block.max_health)
 
 func get_damage() -> float:
 	if attack_mode == AttackModes.Straight:
@@ -132,3 +133,9 @@ func get_damage() -> float:
 	elif attack_mode == AttackModes.Burst:
 		return stat_block.damage*1.5
 	return 0
+
+func heal(value: float = -1):
+	if value < 0:
+		stat_block.health = stat_block.max_health
+	else:
+		stat_block.health = clamp(stat_block.health + value, 0, stat_block.max_health)

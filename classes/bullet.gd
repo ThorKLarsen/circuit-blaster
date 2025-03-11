@@ -131,7 +131,12 @@ func monitor_callback(
 ):
 	if killed:
 		return
+		
 	var body = instance_from_id(instance_id)
+	if "is_dead" in body:
+		if body.is_dead:
+			return
+
 	if body != null:
 		body_entered.emit(self, body)
 

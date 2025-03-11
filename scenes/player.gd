@@ -56,6 +56,7 @@ func _physics_process(delta):
 		attack_timer -= delta
 	else:
 		if Input.is_action_pressed("shoot"):
+			$ShootAudio.play(      )
 			if attack_mode == AttackModes.Straight:
 				attack_timer += 1/stat_block.attack_speed
 				shoot_pattern_component.shoot_straight(stat_block.attack_level)
@@ -114,6 +115,7 @@ func spawn_bullet(
 	)
 
 func hit(value):
+	$HitAudio.play()
 	stat_block.health -= value
 	print("player hit: ", value, ' ', stat_block.health)
 
@@ -131,7 +133,7 @@ func get_damage() -> float:
 	elif attack_mode == AttackModes.Wide:
 		return stat_block.damage*0.7
 	elif attack_mode == AttackModes.Burst:
-		return stat_block.damage*1.5
+		return stat_block.damage*1.2
 	return 0
 
 func heal(value: float = -1):

@@ -53,7 +53,7 @@ func wave_create(stage: int, world: int, wave_n: int) -> Array[SpawnResource]:
 		wave = wave_generators.pick_random().call(stage, world)
 	
 	else:
-		if stage%5 == 4 and wave_n == 0:
+		if stage%5 == 4 and wave_n == 2:
 			wave = elite_wave(stage, world)
 			if world >= 3:
 				var wave_generators = [
@@ -235,7 +235,7 @@ func medium_fighter_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var n: int = world
 	for i in range(n):
 		var scene = Global.rand_weighted(enemies, enemy_weights)
-		var lane = range(spawn_lanes).pick_random()
+		var lane = range(spawn_lanes-2).pick_random() +1
 		var time_offset = (i/n) * wave_time
 		wave.append(
 			make_enemy_resource(scene, lane, time_offset)

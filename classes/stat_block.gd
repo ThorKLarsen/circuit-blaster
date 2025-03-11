@@ -14,17 +14,17 @@ var level: int
 var max_health: float
 var health: float
 const base_health = 50
-static func per_level_health(lvl): return lvl * 10 # Average increase pr. level
+static func per_level_health(lvl): return snapped(log(2 + 5*lvl)*10, 5) # Average increase pr. level
 var regen: float # Health pr. second
 const base_regen = 0.2
-static func per_level_regen(lvl): return lvl * 0.05
+static func per_level_regen(lvl): return snapped(log(1.1 + lvl/20.), 0.01)
 
 var damage: float
 const base_damage = 10
-static func per_level_damage(lvl): return lvl * 2 + lvl**2
+static func per_level_damage(lvl): return snapped(log(2 + 5*lvl)*5, 1)
 var attack_speed: float #  attacks pr. second
 const base_attack_speed = 1.
-static func per_level_attack_speed(lvl): return log(1 + lvl/10.)
+static func per_level_attack_speed(lvl): return snapped(log(1.2 + lvl/30.), 0.01)
 
 var attack_level: int
 const base_attack_level = 0
@@ -151,14 +151,14 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 		increase_level[Stats.find_key(stat)] += 1
 		match(stat):
 			Stats.ATTACK_LEVEL: attack_level += 1
-			Stats.HEALTH: health += per_level_health(lvl + 2)
-			Stats.REGEN: regen += per_level_regen(lvl + 2)
-			Stats.DAMAGE: damage += per_level_damage(lvl + 2) * 0.2
-			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl + 2)
-			Stats.SPEED: speed += 20
+			Stats.HEALTH: health += per_level_health(lvl+1)
+			Stats.REGEN: regen += per_level_regen(lvl+1)
+			Stats.DAMAGE: damage += per_level_damage(lvl+1)
+			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl+1)
+			Stats.SPEED: speed += 35
 	
-	if lvl <= 0:
-		lvl = 0
+	if lvl <= 0 or size >= 7 or lvl%5 == 0:
+		lvl = max(lvl, 0)
 		if attack_level == 0:
 			increase_level[Stats.find_key(Stats.ATTACK_LEVEL)] += 1
 			attack_level += 1
@@ -177,7 +177,7 @@ static func make_random_enemy_from_level(lvl: int):
 
 static func enemy_health(stage: int):
 	var w = 1 + stage/5
-	return 5. + stage * 5 + 20 * (w*(w - 1))/2
+	return 5. + stage * (4 + 2*w) + 20 * (w*(w - 1))/2
 
 static func enemy_damage(stage: int):
 	var w = 1 + stage/5

@@ -66,6 +66,7 @@ func hit(value):
 		kill()
 
 func kill(player_kill = true):
+	SignalBus.enemy_died.emit()
 	is_dead = true
 	stat_block.free.call_deferred()
 	queue_free()

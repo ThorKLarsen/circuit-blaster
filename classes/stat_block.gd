@@ -155,7 +155,7 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 			Stats.REGEN: regen += per_level_regen(lvl+1)
 			Stats.DAMAGE: damage += per_level_damage(lvl+1)
 			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl+1)
-			Stats.SPEED: speed += 35
+			Stats.SPEED: speed += 20
 	
 	if lvl <= 0 or size >= 7 or lvl%5 == 0:
 		lvl = max(lvl, 0)

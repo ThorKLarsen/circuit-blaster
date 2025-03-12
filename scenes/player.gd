@@ -35,7 +35,7 @@ func _physics_process(delta):
 	var direction = Vector2(direction_h, direction_v).normalized()
 	var cur_speed = stat_block.speed
 	if Input.is_action_pressed("focus"):
-		cur_speed = 50
+		cur_speed = 100
 	if Input.is_action_just_pressed("focus"):
 		stat_block.attack_level += 1
 		
@@ -74,9 +74,10 @@ func _physics_process(delta):
 	move_and_slide()
 	#GameData.player_position = position
 	
-	if game.game_state == game.GameState.Stage:
-		if stat_block.health <= stat_block.max_health:
-			stat_block.health += stat_block.regen * delta
+	if game != null:
+		if game.game_state == game.GameState.Stage:
+			if stat_block.health <= stat_block.max_health:
+				stat_block.health += stat_block.regen * delta
 
 func set_animation(delta):
 	if sign(velocity.x) == 1:

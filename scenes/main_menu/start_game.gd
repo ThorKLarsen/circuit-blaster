@@ -12,5 +12,6 @@ func _process(delta):
 
 
 func _on_pressed():
+	GameData.stage = -1
 	var game_scene = load("res://scenes/game.tscn")
 	get_tree().change_scene_to_packed(game_scene)

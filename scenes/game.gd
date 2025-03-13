@@ -7,6 +7,7 @@ enum GameState{
 }
 
 @export var enemy_spawner: EnemySpawner
+@export var player: CharacterBody2D
 
 var game_state = GameState.Stage
 var stage_time: float = 45.0
@@ -22,6 +23,8 @@ var wave_times = []
 func _ready():
 	GameData.game = self
 	open_shop()
+	
+	SignalBus.player_died.connect(_on_player_died)
 
 
 
@@ -69,3 +72,13 @@ func open_shop():
 
 func _on_shop_shop_closed():
 	next_stage()
+
+func _on_player_died():
+	player.hide()
+	player.set_process_input(false)
+	player.set_process(false)
+	player.set_physics_process(false)
+	for c in get_tree().get_nodes_in_group("enemy"):
+		c.queue_free()
+	set_process(false)
+	$CanvasLayer/DeathMessage.show()

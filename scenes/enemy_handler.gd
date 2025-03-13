@@ -43,6 +43,7 @@ func _process(delta):
 
 func wave_create(stage: int, world: int, wave_n: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
+	
 	if world <= 1:
 		var wave_generators = [
 			popcorn_cloud_wave,
@@ -51,7 +52,14 @@ func wave_create(stage: int, world: int, wave_n: int) -> Array[SpawnResource]:
 		]
 		
 		wave = wave_generators.pick_random().call(stage, world)
-	
+		
+		if stage == 4 and wave_n == 3:
+			var sr = SpawnResource.new()
+			sr.lane = 2
+			sr.time_offest = 1
+			sr.enemy = load("res://scenes/enemies/fighter_large.tscn")
+			wave.append(sr)
+		
 	else:
 		if stage%5 == 4 and wave_n == 2:
 			wave = elite_wave(stage, world)
@@ -232,7 +240,7 @@ func medium_fighter_wave(stage:int, world: int) -> Array[SpawnResource]:
 	for i in range(3):
 		lanes.append(range(spawn_lanes).pick_random())
 	
-	var n: int = world
+	var n: int = world - 1
 	for i in range(n):
 		var scene = Global.rand_weighted(enemies, enemy_weights)
 		var lane = range(spawn_lanes-2).pick_random() +1

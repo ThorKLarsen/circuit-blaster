@@ -18,10 +18,6 @@ func _process(delta):
 	pass
 
 
-func _input(event):
-	if event.is_action_pressed("focus"):
-		open_shop()
-
 func open_shop():
 	show()
 	stock()

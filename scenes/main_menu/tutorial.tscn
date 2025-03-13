@@ -46,8 +46,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6d4j5")
-highlights = [NodePath("Controls"), NodePath("Stage1"), NodePath("Stats"), NodePath("EnemyStats"), NodePath("ShootMode"), NodePath("ShootMode2"), NodePath("ShootMode3"), NodePath("ShootMode4"), NodePath("CircuitDock"), NodePath("Input"), NodePath("Junk"), NodePath("Storage"), NodePath("Terminal")]
-tutorial_text = Array[String](["You control your ship using 'WASD' and 'SPACE' to shoot. You can press 'SHIFT' to fly at a constant low speed for easier controls. Press 'E' to change attack mode.", "This is the stage display, the further you go the more difficult the game becomes.", "Here you can see your stats.", "You can see the enemy stats here. Larger enemies will have more health.", "Press 'E' to change attack pattern.", "Straight mode shoots in a straight line.", "Wide mode shoots in a larger area, but has shorter range.", "Burst mode shoots slowly, but can release massive amounts of bullets at once.", "After every stage you get to choose a new circuit to add to your ship.", "Your new circuits will arrive here, remember to remove them or they will be destroyed once the next one comes in.", "Place circuits here to delete them.", "Here you can store circuits you might use later.", "Finally the terminal is where the magic happens. Circuits placed here will contribute to your total stats. Ports can be connected as shown here for an even larger stat boost."])
+highlights = [NodePath("Controls"), NodePath("Stage"), NodePath("StageTimer"), NodePath("Stats"), NodePath("EnemyStats"), NodePath("ShootMode"), NodePath("ShootMode2"), NodePath("ShootMode3"), NodePath("ShootMode4"), NodePath("CircuitDock"), NodePath("Input"), NodePath("Junk"), NodePath("Storage"), NodePath("Terminal")]
+tutorial_text = Array[String](["You control your ship using 'WASD' and 'SPACE' to shoot. You can press 'SHIFT' to fly at a constant low speed for easier controls. Press 'E' to change attack mode.", "This is the stage display, the further you go the more difficult the game becomes.", "This blue bar is the stage timer. When it runs out, the stage ends. The green notches indicate when the waves will spawn.", "Here you can see your stats. These will increase as you place more circuits in the CPU Terminal.", "You can see the enemy stats here. Larger enemies will have more health.", "Press 'E' to change attack pattern.", "Straight mode shoots in a straight line.", "Wide mode shoots in a larger area, but has shorter range.", "Burst mode shoots slowly, but can release massive amounts of bullets at once.", "After every stage you get to choose a new circuit to add to your ship. These will appear here. You can drag and drop them with your mouse. (Once you start the game, not here.)", "Your new circuits will arrive here, remember to remove them or they will be destroyed once the next one comes in.", "Place circuits here to delete them.", "Here you can store circuits you might use later.", "Finally the terminal is where the magic happens. Circuits placed here will contribute to your total stats. Ports can be connected as shown here for an even larger stat boost."])
 text_box = NodePath("Panel")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -225,9 +225,33 @@ texture_progress = SubResource("AtlasTexture_w3j2e")
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/UiDock/Control/StageProgressBar"]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 13.0
+offset_top = 47.0
 offset_right = 15.0
-offset_bottom = 15.0
+offset_bottom = 49.0
+color = Color(0.568627, 0.858824, 0.411765, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/UiDock/Control/StageProgressBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 149.0
+offset_right = 15.0
+offset_bottom = 151.0
+color = Color(0.568627, 0.858824, 0.411765, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/UiDock/Control/StageProgressBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 218.0
+offset_right = 15.0
+offset_bottom = 220.0
+color = Color(0.568627, 0.858824, 0.411765, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/UiDock/Control/StageProgressBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 288.0
+offset_right = 15.0
+offset_bottom = 290.0
 color = Color(0.568627, 0.858824, 0.411765, 1)
 
 [node name="AttackModeIndicator" type="Control" parent="CanvasLayer/UiDock/Control"]
@@ -473,10 +497,15 @@ offset_top = -54.0
 offset_right = 150.0
 offset_bottom = -38.0
 
-[node name="Stage1" parent="." instance=ExtResource("8_jwkqb")]
+[node name="Stage" parent="." instance=ExtResource("8_jwkqb")]
 layout_mode = 0
 offset_left = 31.0
 offset_right = 144.0
+
+[node name="StageTimer" parent="." instance=ExtResource("8_jwkqb")]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 368.0
 
 [node name="Stats" parent="." instance=ExtResource("8_jwkqb")]
 layout_mode = 0

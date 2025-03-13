@@ -48,11 +48,11 @@ func place_circuit(circuit: Circuit, grid: CircuitGrid, coords: Vector2i):
 
 	
 	
-	# If placed in the terminal, we update player stats.
-	var circuits: Array[Circuit]
-	for c in terminal.circuits:
-		circuits.append(c)
-	GameData.player.update_stats(circuits)
+	if terminal != null:
+		var circuits: Array[Circuit]
+		for c in terminal.circuits:
+			circuits.append(c)
+		GameData.player.update_stats(circuits)
 
 
 func remove_circuit(circuit: Circuit):

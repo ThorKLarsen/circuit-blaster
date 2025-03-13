@@ -17,7 +17,6 @@ var stat_block: StatBlock
 var attack_mode: AttackModes = AttackModes.Straight
 var attack_timer = 0
 
-
 func _ready():
 	GameData.player = self
 	sprite.play("fly")
@@ -118,7 +117,8 @@ func spawn_bullet(
 func hit(value):
 	$HitAudio.play()
 	stat_block.health -= value
-	print("player hit: ", value, ' ', stat_block.health)
+	if stat_block.health < 0:
+		SignalBus.player_died.emit()
 
 
 func update_stats(circuits: Array[Circuit]):

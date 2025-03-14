@@ -17,6 +17,13 @@ func move(delta):
 	if angle >= 2*PI:
 		angle -= 2*PI
 
+	if (position.x - Constants.left_margin) < 16:
+		velocity.x += 50
+	elif (Constants.right_margin - position.x) < 16:
+		velocity.x -= 50
+
+
+
 func shoot():
 	var n = 6
 	for i in range(n):

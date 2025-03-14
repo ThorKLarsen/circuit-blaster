@@ -53,11 +53,17 @@ func wave_create(stage: int, world: int, wave_n: int) -> Array[SpawnResource]:
 		
 		wave = wave_generators.pick_random().call(stage, world)
 		
-		if stage == 4 and wave_n == 3:
+		if stage == 3 and wave_n == 3:
 			var sr = SpawnResource.new()
 			sr.lane = 2
 			sr.time_offest = 1
 			sr.enemy = load("res://scenes/enemies/fighter_large.tscn")
+			wave.append(sr)
+		elif stage == 4 and wave_n == 3:
+			var sr = SpawnResource.new()
+			sr.lane = 2
+			sr.time_offest = 1
+			sr.enemy = load("res://scenes/enemies/spider_elite.tscn")
 			wave.append(sr)
 		
 	else:
@@ -95,52 +101,7 @@ func wave_create(stage: int, world: int, wave_n: int) -> Array[SpawnResource]:
 
 	return wave
 
-func wave_create_old(stage: int) -> Array[SpawnResource]:
-	var r = randf()
-	var res: Array[SpawnResource] = []
-	
-	var threat = get_threat(stage)
-	
-	# Only popcorn wave
-	if r < 0.4:
-		# Number of enemies
-		var n = round(threat)
-		for i in range(n):
-			var enemy_resource = make_enemy_resource(
-				small_enemies.pick_random(),
-				randi_range(0, 4),
-				clampf(randfn(wave_time/2., 2), 0, wave_time)
-			)
-			res.append(enemy_resource)
-	# Medium enemy wave
-	#elif r < 8:
-	else:
-		# Number of medium enemies
-		var m = round(threat/2)/medium_enemy_threat
-		threat -= m * medium_enemy_threat
-		for i in range(m):
-			var enemy_resource = make_enemy_resource(
-				medium_enemies[0],
-				[1, 3][i%2], # Alternate between lane 1 and 3
-				wave_time/m * i
-			)
-			res.append(enemy_resource)
-		# Number of small enemies
-		var n = round(threat)
-		for i in range(n):
-			var enemy_resource = make_enemy_resource(
-				small_enemies[0],
-				randi_range(0, 4),
-				clampf(randfn(wave_time/2.0, 2), 0, wave_time)
-			)
-			res.append(enemy_resource)
-	# Large enemy wave
-	#else:
-		#return
-		
-	return res
-
-func spawm_wave(wave: Array[SpawnResource]):
+func spawn_wave(wave: Array[SpawnResource]):
 	for res in wave:
 		spawn_enemy(res)
 
@@ -175,6 +136,9 @@ func popcorn_cloud_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var threat: float = get_threat(stage)
 	var enemies = small_enemies
 	var enemy_weights = [10, world]
+	if stage >= 2:
+		enemies.append(load("res://scenes/enemies/virus_enemy.tscn"))
+		enemy_weights.append(1)
 	
 	for i in range(round(threat)):
 		var scene = Global.rand_weighted(enemies, enemy_weights)
@@ -216,7 +180,7 @@ func popcorn_flow_wave(stage:int, world: int) -> Array[SpawnResource]:
 	var wave: Array[SpawnResource] = []
 	var threat: float = get_threat(stage)
 	var enemies = small_enemies
-	var enemy_weights = [10, min(world, 3)]
+	var enemy_weights = [10, world]
 	
 	for i in range(round(threat)):
 		var scene = Global.rand_weighted(enemies, enemy_weights)

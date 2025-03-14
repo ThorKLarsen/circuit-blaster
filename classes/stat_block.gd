@@ -157,7 +157,7 @@ static func make_random_circuit_from_level(lvl: int, size: int):
 			Stats.ATTACK_SPEED: attack_speed += per_level_attack_speed(lvl+1)
 			Stats.SPEED: speed += 20
 	
-	if lvl <= 0 or size >= 7 or lvl%5 == 0:
+	if lvl <= 0 or size >= 7 or lvl%5 == 4:
 		lvl = max(lvl, 0)
 		if attack_level == 0:
 			increase_level[Stats.find_key(Stats.ATTACK_LEVEL)] += 1

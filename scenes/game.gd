@@ -60,7 +60,7 @@ func next_stage():
 		waves.append(wave)
 		wave_times.append(time)
 		get_tree().create_timer(time).timeout.connect(
-			enemy_spawner.spawm_wave.bind(wave)
+			enemy_spawner.spawn_wave.bind(wave)
 		)
 	SignalBus.stage_started.emit(waves, wave_times)
 

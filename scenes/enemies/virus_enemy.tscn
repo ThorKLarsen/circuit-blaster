@@ -13,9 +13,8 @@ size = Vector2(16, 16)
 
 [node name="Enemy" instance=ExtResource("1_dblfk")]
 script = ExtResource("2_lv7oh")
-health_mod = 1.2
-regen_mod = 1.0
-attack_speed_mod = 0.0
+health_mod = 2.0
+speed_mod = 0.5
 
 [node name="Sprite2D" parent="." index="0"]
 texture = SubResource("AtlasTexture_gtqwg")
@@ -25,4 +24,3 @@ shape = SubResource("RectangleShape2D_14vsj")
 
 [node name="ShootTimer" parent="." index="2"]
 unique_name_in_owner = true
-wait_time = 1.0

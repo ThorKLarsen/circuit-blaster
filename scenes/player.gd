@@ -35,9 +35,7 @@ func _physics_process(delta):
 	var cur_speed = stat_block.speed
 	if Input.is_action_pressed("focus"):
 		cur_speed = 100
-	if Input.is_action_just_pressed("focus"):
-		stat_block.attack_level += 1
-		
+
 	
 	if Input.is_action_just_pressed("next_attack_mode"):
 		attack_mode += 1
